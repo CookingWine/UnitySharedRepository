@@ -99,11 +99,6 @@ public class SearchSongsDataInfo
         /// 标记
         /// </summary>
         public long Mark;
-
-        public override string ToString( )
-        {
-            return $"歌曲ID:{ID}\n歌名{SongName}\n歌手信息[\n{Artists.GetInfo( )}\n]\n专辑信息[\n{Album.GetInfo( )}\n]\n持续时间{Duration}\n版权标识{CopyrightId}\n状态{Status}\n化名信息null\nRType:{RType}\nFtyp:{Ftype}\nMVID:{MVID}\n费用{fee}\nRUrl:{RUrl}\n标识{Mark}";
-        }
     }
 
     /// <summary>
@@ -145,11 +140,6 @@ public class SearchSongsDataInfo
         public long img1v1;
 
         public string trans;
-
-        public string GetInfo( )
-        {
-            return $"歌手ID:{ID}\n歌手名{Name}\nPicUrl:{PicUrl}\n别名信息:{Alias}\n专辑数{AlbumSize}\nPicId:{PicId}\n粉丝团{FansGroup}\n img1v1Url:{img1v1Url}\nimg1v1:{img1v1}\ntrans:{trans}";
-        }
     }
 
     /// <summary>
@@ -198,11 +188,6 @@ public class SearchSongsDataInfo
         /// 标记
         /// </summary>
         public int mark;
-
-        public string GetInfo( )
-        {
-            return $"专辑ID:{ID}\n专辑名:{Name}\n歌手{Artist}\n发布时间{publishTime}\n规格{Size}\n版权标识{CopyrightId}\n状态{status}\npicId:{picId}\n标记{mark}";
-        }
     }
 }
 
@@ -528,9 +513,10 @@ public class PlaySongsInfo
 public class CloudMusicAnalysin
 {
     /// <summary>
-    /// 解析歌曲
+    /// 搜索到歌曲的数据
     /// </summary>
     /// <param name="data"></param>
+    /// <param name="totalCount">每次拉取歌曲的数量</param>
     /// <returns></returns>
     public SearchSongsDataInfo.SongsData AnalysinSongsData( string data , int totalCount = 1 )
     {
@@ -584,6 +570,11 @@ public class CloudMusicAnalysin
         return songs;
     }
 
+    /// <summary>
+    /// 播放歌曲的数据
+    /// </summary>
+    /// <param name="data"></param>
+    /// <returns></returns>
     public PlaySongsInfo.SongsData AnalysinPlaySongData( string data )
     {
         PlaySongsInfo.SongsData songs = new PlaySongsInfo.SongsData( );
@@ -840,6 +831,42 @@ public class CloudMusicAPI
     /// <returns></returns>
     public static string VerificationCodeLogin( string phone , string code )
     {
-        return  $"http://netease-cloud-music-api-beta-lyart.vercel.app/captcha/verify?phone={phone}&captcha={code}";
+        return $"http://netease-cloud-music-api-beta-lyart.vercel.app/captcha/verify?phone={phone}&captcha={code}";
+    }
+}
+
+
+public class CloudMusicPlayerAPI
+{
+    /// <summary>
+    /// 音质
+    /// </summary>
+    public enum EToneQuality
+    {
+        /// <summary>
+        /// 标准
+        /// </summary>
+        standard,
+        /// <summary>
+        /// 较高
+        /// </summary>
+        higher,
+        /// <summary>
+        /// 极高
+        /// </summary>
+        exhigh,
+        /// <summary>
+        /// 无损
+        /// </summary>
+        lossless,
+        /// <summary>
+        /// Hi-Res
+        /// </summary>
+        hires,
+    }
+
+    public static string GetPlayMusicUrl( int id )
+    {
+        return $"http://music.163.com/song/media/outer/url?id={id}.mp3";
     }
 }

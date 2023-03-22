@@ -26,7 +26,7 @@ public class MusicPlayer :MonoBehaviour
     {
         if( Input.GetKeyDown( KeyCode.Space ) )
         {
-            Debug.Log( "发送验证码" );
+            Debug.Log( "账号密码登录" );
             StartCoroutine( RequestCloudMusic( CloudMusicAPI.SendVerificationCode( Phone ) ) );
         }
 
