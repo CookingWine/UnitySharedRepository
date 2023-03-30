@@ -253,6 +253,76 @@ public static class DateTimeExtend
 }
 
 /// <summary>
+/// file扩展
+/// </summary>
+public static class FileExtend
+{
+    /// <summary>
+    /// 当前文件是否存在
+    /// </summary>
+    /// <param name="file"></param>
+    /// <returns></returns>
+    public static bool FileExists( this string file )
+    {
+        return File.Exists( file );
+    }
+
+    /// <summary>
+    /// 当前文件是否存在如果文件存在则读取该内容
+    /// </summary>
+    /// <param name="file">文件路径</param>
+    /// <param name="data">如果文件存在则读取该内容,如果不存在则为空</param>
+    /// <returns></returns>
+    public static bool FileExists( this string file , out string data )
+    {
+        if( File.Exists( file ) )
+        {
+            data = File.ReadAllText( file );
+            return true;
+        }
+        data = string.Empty;
+        return false;
+    }
+
+    /// <summary>
+    /// 创建文件
+    /// </summary>
+    /// <param name="cover">如果有该文件是否进行覆盖</param>
+    /// <param name="allPath">文件完整路径</param>
+    public static void CreationFile( string allPath , bool cover = false )
+    {
+        if( File.Exists( allPath ) && !cover )
+        {
+            throw new Exception( "当前路径已经存在" );
+        }
+        FileStream fileStream = new FileStream( allPath , FileMode.Create );
+        fileStream.Close( );
+    }
+    public static void CreationFileWirteData( string allPath , string data )
+    {
+        if( File.Exists( allPath ) )
+        {
+            throw new Exception( "当前路径已经存在" );
+        }
+        FileStream fileStream = new FileStream( allPath , FileMode.Create );
+        StreamWriter stream = new StreamWriter( fileStream );
+        stream.Write( data );
+        stream.Close( );
+        fileStream.Close( );
+    }
+    public static string GetFileInfo( string path )
+    {
+        if( File.Exists( path ) )
+        {
+            FileStream file = new FileStream( path , FileMode.Open );
+            StreamReader sr = new StreamReader( file );
+            return sr.ReadToEnd( );
+        }
+        throw new Exception( "当前路径不存在" );
+    }
+}
+
+/// <summary>
 /// Graphic扩展
 /// </summary>
 public static class GraphicExtend
