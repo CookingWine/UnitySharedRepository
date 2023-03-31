@@ -705,18 +705,6 @@ public class CloudMusicAnalysin
             var json = data["artists"][i];
 
             temp[i] = GetArtistsPlayData( json );
-            //temp[i].name = json["name"];
-            //temp[i].id = json["id"];
-            //temp[i].picId = json["picId"];
-            //temp[i].img1v1Id = json["img1v1Id"];
-            //temp[i].briefDesc = json["briefDesc"];
-            //temp[i].picUrl = json["picUrl"];
-            //temp[i].img1v1Url = json["img1v1Url"];
-            //temp[i].albumSize = json["albumSize"];
-            //temp[i].alias = new AliasInfo( );
-            //temp[i].trans = json["trans"];
-            //temp[i].musicSize = json["musicSize"];
-            //temp[i].topicPerson = json["topicPerson"];
         }
 
         return temp;

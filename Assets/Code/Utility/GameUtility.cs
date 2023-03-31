@@ -1400,7 +1400,7 @@ public static class UnityEngineExtend
         GameObject temp = new GameObject( name , components );
         if( parent != null )
         {
-            temp.transform.parent = parent;
+            temp.transform.SetParent( parent,false );
         }
         if( localPost )
         {
@@ -1430,7 +1430,7 @@ public static class UnityEngineExtend
         GameObject temp = new GameObject( name , components );
         if( parent != null )
         {
-            temp.transform.parent = parent;
+            temp.transform.SetParent( parent , false );
         }
         if( localPost )
         {

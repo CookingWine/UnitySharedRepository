@@ -15,7 +15,6 @@ public class GameLoadAsset
     /// </summary>
     public bool EnableBundle { get; private set; } = false;
 
-
     public void EditorEnableBunle( bool value )
     {
         EnableBundle = value;

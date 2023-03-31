@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class CloudMain :MonoBehaviour
 {
+    public static CloudMain Instance { get; private set; }
+
     [SerializeField]
     [Header( "是否在编辑器下启动bundle加载模式" )]
     private bool m_EnableEidtorBundleModel;
@@ -26,6 +28,7 @@ public class CloudMain :MonoBehaviour
     public GameLoadAsset LoadAsset { get; private set; }
     private void Awake( )
     {
+        Instance = this;
         LoadAsset = new GameLoadAsset( );
         Application.targetFrameRate = m_GameFrameRate;
         LoadAsset.EditorEnableBunle( m_EnableEidtorBundleModel );
