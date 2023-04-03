@@ -27,13 +27,15 @@ public class MusicPlayer :MonoBehaviour
         if( Input.GetKeyDown( KeyCode.Space ) )
         {
             Debug.Log( "账号密码登录" );
-            StartCoroutine( RequestCloudMusic( CloudMusicAPI.SendVerificationCode( Phone ) ) );
+           
+           // StartCoroutine( RequestCloudMusic( CloudMusicAPI.SendVerificationCode( Phone ) ) );
         }
 
         if( Input.GetKeyDown( KeyCode.A ) )
         {
             Debug.Log( "验证码登录" );
-            StartCoroutine( RequestCloudMusic( CloudMusicAPI.VerificationCodeLogin( Phone , PhoneCode ) ) );
+
+            //StartCoroutine( RequestCloudMusic( CloudMusicAPI.VerificationCodeLogin( Phone , PhoneCode ) ) );
         }
 
     }
