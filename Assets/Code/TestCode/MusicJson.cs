@@ -628,6 +628,24 @@ public class CloudMusicAnalysin
         return songs;
     }
 
+
+    /// <summary>
+    /// 解析歌词
+    /// </summary>
+    /// <param name="data"></param>
+    /// <returns></returns>
+    public LyricData.SongsLyricData AnlysinLyricData( string data )
+    {
+        LyricData.SongsLyricData temp = new LyricData.SongsLyricData( );
+        JSONNode json = JSON.Parse( data );
+        temp.songStatus = json["songStatus"];
+        temp.lyricVersion = json["lyricVersion"];
+        temp.lyric = json["lyric"];
+        temp.ArtistsLyric = ArtistsSongsLyric( json["lyric"] );
+        temp.code = json["code"];
+        return temp;
+    }
+
     /// <summary>
     /// 获取歌手信息
     /// </summary>
@@ -766,6 +784,22 @@ public class CloudMusicAnalysin
 
         return temp;
     }
+
+    private Dictionary<string , string> ArtistsSongsLyric( string data )
+    {
+        Dictionary<string , string> temp = new Dictionary<string , string>( );
+        string[] da = data.Split( '\n' );
+        foreach( var item in da )
+        {
+            string[] time = item.Split( "]" );
+            if( time[1].IsNullOrEmpty( ) )
+            {
+                continue;
+            }
+            temp.Add( time[0] + "]" , time[1] );
+        }
+        return temp;
+    }
 }
 
 /// <summary>
@@ -793,11 +827,7 @@ public class CloudMusicAPI
     /// <returns></returns>
     public static string GetRequestMP3URL( PlaySongsInfo.SongsData data )
     {
-        if( data.copyrightId > 1 )
-        {
-            Debug.LogError( "无法播放VIP歌曲" );
-            return null;
-        }
+
         Debug.Log( $"当前的id为{data.id}\n歌手为{data.artists[0].name}" );
         return $"http://music.163.com/song/media/outer/url?id={data.id}.mp3";
     }
@@ -823,38 +853,18 @@ public class CloudMusicAPI
     }
 }
 
-
-public class CloudMusicPlayerAPI
+public class LyricData
 {
-    /// <summary>
-    /// 音质
-    /// </summary>
-    public enum EToneQuality
+    public struct SongsLyricData
     {
-        /// <summary>
-        /// 标准
-        /// </summary>
-        standard,
-        /// <summary>
-        /// 较高
-        /// </summary>
-        higher,
-        /// <summary>
-        /// 极高
-        /// </summary>
-        exhigh,
-        /// <summary>
-        /// 无损
-        /// </summary>
-        lossless,
-        /// <summary>
-        /// Hi-Res
-        /// </summary>
-        hires,
-    }
+        public int songStatus;
 
-    public static string GetPlayMusicUrl( int id )
-    {
-        return $"http://music.163.com/song/media/outer/url?id={id}.mp3";
+        public int lyricVersion;
+
+        public string lyric;
+
+        public Dictionary<string , string> ArtistsLyric;
+
+        public int code;
     }
 }

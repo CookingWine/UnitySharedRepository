@@ -35,12 +35,13 @@ public class UIDefaultAutoBindRuleHelper :IAutoBindingRuleHelper
         {"Sbar","Scrollbar"},
         {"SRect","ScrollRect"},
         {"Drop","Dropdown"},
+        { "Source","AudioSource"},
 
         { "TInput","TMP_InputField"},
         { "TTxt","TextMeshProUGUI"},
     };
 
-    public bool IsValidBind( Transform target , List<string> filedNames , List<string> componentTypeNames)
+    public bool IsValidBind( Transform target , List<string> filedNames , List<string> componentTypeNames )
     {
         string[] strArray = target.name.Split( '_' );
 
