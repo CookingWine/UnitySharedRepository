@@ -14,3 +14,18 @@ public class SingletonException :Exception
 
     }
 }
+
+/// <summary>
+/// 无限列表异常
+/// </summary>
+public class InfiniterListException :Exception
+{
+    /// <summary>
+    /// 无限列表异常
+    /// </summary>
+    /// <param name="message">描述错误的消息</param>
+    public InfiniterListException( string message ) : base( message )
+    {
+
+    }
+}

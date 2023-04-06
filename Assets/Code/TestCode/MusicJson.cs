@@ -434,6 +434,9 @@ public class PlaySongsInfo
 
         public long picId;
 
+        /// <summary>
+        /// 图片
+        /// </summary>
         public string blurPicUrl;
 
         public string companyId;
@@ -530,7 +533,8 @@ public class CloudMusicAnalysin
 
         if( totalCount > songs.SongCount )
         {
-            throw new System.Exception( "请求的歌曲数量大于总数量" );
+            Debug.LogError( "请求的歌曲数量大于总数量,启用自动修复请求数据长度为" + songs.SongCount );
+            totalCount = songs.SongCount;
         }
 
         //获取全部歌曲数据
@@ -787,16 +791,17 @@ public class CloudMusicAnalysin
 
     private Dictionary<string , string> ArtistsSongsLyric( string data )
     {
+        Debug.Log( data );
         Dictionary<string , string> temp = new Dictionary<string , string>( );
         string[] da = data.Split( '\n' );
         foreach( var item in da )
         {
-            string[] time = item.Split( "]" );
-            if( time[1].IsNullOrEmpty( ) )
+            if( item.IsNullOrEmpty( ) )
             {
                 continue;
             }
-            temp.Add( time[0] + "]" , time[1] );
+            string[] time = item.Split( "]" );
+            temp.Add( time[0].Split( '[' )[1] , time[1] );
         }
         return temp;
     }
@@ -827,8 +832,6 @@ public class CloudMusicAPI
     /// <returns></returns>
     public static string GetRequestMP3URL( PlaySongsInfo.SongsData data )
     {
-
-        Debug.Log( $"当前的id为{data.id}\n歌手为{data.artists[0].name}" );
         return $"http://music.163.com/song/media/outer/url?id={data.id}.mp3";
     }
 
@@ -861,8 +864,14 @@ public class LyricData
 
         public int lyricVersion;
 
+        /// <summary>
+        /// 歌词
+        /// </summary>
         public string lyric;
 
+        /// <summary>
+        /// 歌词解析后
+        /// </summary>
         public Dictionary<string , string> ArtistsLyric;
 
         public int code;

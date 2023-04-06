@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-//自动生成于：2023/4/4 17:06:13
+//自动生成于：2023/4/6 18:31:09
 public partial class MainInterface
 {
 
@@ -18,14 +18,22 @@ public partial class MainInterface
 	private Button m_Btn_Magnify;
 	private Button m_Btn_Closee;
 	private RectTransform m_Trans_CentreObjectBG;
-	private Button m_Btn_PlayerMusic;
-	private TextMeshProUGUI m_TTxt_SongsDataSongsName;
-	private TextMeshProUGUI m_TTxt_SongsDataLonghair;
 	private AudioSource m_Source_DownLyric;
 	private RectTransform m_Trans_LyricBG;
 	private Image m_Img_SongsIcon;
+	private Button m_Btn_SongsIcon;
 	private TextMeshProUGUI m_TTxt_SongsName;
 	private TextMeshProUGUI m_TTxt_Longhair;
+	private Slider m_Slider_SongsProgressBar;
+	private TextMeshProUGUI m_TTxt_CurrentPlayTime;
+	private TextMeshProUGUI m_TTxt_TotalPlayTime;
+	private Image m_Img_LastSongs;
+	private Button m_Btn_LastSongs;
+	private Image m_Img_PlayOrPause;
+	private Button m_Btn_PlayOrPause;
+	private Image m_Img_NextSongs;
+	private Button m_Btn_NextSongs;
+	private Button m_Btn_OpenPlayList;
 
 	private void InitBindComponent(GameObject go)
 	{
@@ -42,13 +50,21 @@ public partial class MainInterface
 		m_Btn_Magnify = autoBindTool.GetBindComponent<Button>(9);
 		m_Btn_Closee = autoBindTool.GetBindComponent<Button>(10);
 		m_Trans_CentreObjectBG = autoBindTool.GetBindComponent<RectTransform>(11);
-		m_Btn_PlayerMusic = autoBindTool.GetBindComponent<Button>(12);
-		m_TTxt_SongsDataSongsName = autoBindTool.GetBindComponent<TextMeshProUGUI>(13);
-		m_TTxt_SongsDataLonghair = autoBindTool.GetBindComponent<TextMeshProUGUI>(14);
-		m_Source_DownLyric = autoBindTool.GetBindComponent<AudioSource>(15);
-		m_Trans_LyricBG = autoBindTool.GetBindComponent<RectTransform>(16);
-		m_Img_SongsIcon = autoBindTool.GetBindComponent<Image>(17);
-		m_TTxt_SongsName = autoBindTool.GetBindComponent<TextMeshProUGUI>(18);
-		m_TTxt_Longhair = autoBindTool.GetBindComponent<TextMeshProUGUI>(19);
+		m_Source_DownLyric = autoBindTool.GetBindComponent<AudioSource>(12);
+		m_Trans_LyricBG = autoBindTool.GetBindComponent<RectTransform>(13);
+		m_Img_SongsIcon = autoBindTool.GetBindComponent<Image>(14);
+		m_Btn_SongsIcon = autoBindTool.GetBindComponent<Button>(15);
+		m_TTxt_SongsName = autoBindTool.GetBindComponent<TextMeshProUGUI>(16);
+		m_TTxt_Longhair = autoBindTool.GetBindComponent<TextMeshProUGUI>(17);
+		m_Slider_SongsProgressBar = autoBindTool.GetBindComponent<Slider>(18);
+		m_TTxt_CurrentPlayTime = autoBindTool.GetBindComponent<TextMeshProUGUI>(19);
+		m_TTxt_TotalPlayTime = autoBindTool.GetBindComponent<TextMeshProUGUI>(20);
+		m_Img_LastSongs = autoBindTool.GetBindComponent<Image>(21);
+		m_Btn_LastSongs = autoBindTool.GetBindComponent<Button>(22);
+		m_Img_PlayOrPause = autoBindTool.GetBindComponent<Image>(23);
+		m_Btn_PlayOrPause = autoBindTool.GetBindComponent<Button>(24);
+		m_Img_NextSongs = autoBindTool.GetBindComponent<Image>(25);
+		m_Btn_NextSongs = autoBindTool.GetBindComponent<Button>(26);
+		m_Btn_OpenPlayList = autoBindTool.GetBindComponent<Button>(27);
 	}
 }

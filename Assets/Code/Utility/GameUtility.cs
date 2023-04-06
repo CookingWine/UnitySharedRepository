@@ -40,6 +40,24 @@ public static class AudioSourceExtend
 
         return $"{hour.PadLeft( 2 )}:{minute.PadLeft( 2 )}:{second.PadLeft( 2 )}";
     }
+
+    public static string GetAudioClipTotalTimeMsec( this AudioClip clip )
+    {
+        int hour = (int)clip.length / 3600;
+        int minute = (int)( clip.length - hour * 3600 ) / 60;
+        int second = (int)( clip.length - hour * 3600 - minute * 60 );
+        int msec = (int)( ( clip.length - (int)clip.length ) * 1000 );
+        return $"{hour.PadLeft( 2 )}:{minute.PadLeft( 2 )}:{second.PadLeft( 2 )}:{msec.PadLeft( 2 )[..2]}";
+    }
+
+    public static string GetSoundCurrentTimeMsec( this AudioSource source )
+    {
+        int hour = (int)source.time / 3600;
+        int minute = (int)( source.time - hour * 3600 ) / 60;
+        int second = (int)( source.time - hour * 3600 - minute * 60 );
+        int msec = (int)( ( source.time - (int)source.time ) * 1000 );
+        return $"{hour.PadLeft( 2 )}:{minute.PadLeft( 2 )}:{second.PadLeft( 2 )}:{msec.PadLeft( 2 )[..2]}";
+    }
 }
 
 /// <summary>
@@ -1400,7 +1418,7 @@ public static class UnityEngineExtend
         GameObject temp = new GameObject( name , components );
         if( parent != null )
         {
-            temp.transform.SetParent( parent,false );
+            temp.transform.SetParent( parent , false );
         }
         if( localPost )
         {

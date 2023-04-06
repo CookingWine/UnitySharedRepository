@@ -1,27 +1,67 @@
-using CloudMusic.API;
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using System.Net;
 using UnityEngine;
 using UnityEngine.Networking;
 
 public partial class MainInterface :MonoBehaviour
 {
+    private static MainInterface m_Instance;
+    public static MainInterface Instance
+    {
+        get
+        {
+            if( m_Instance == null )
+            {
+                Debug.LogError( "异常错误" );
+            }
+            return m_Instance;
+        }
+    }
+
     private CloudMusicAnalysin m_MusicAnalysin;
     private SearchSongsDataInfo.SongsData m_songsData;
-    private int m_CurrentIndex;
+    private RecyclingListView m_ScrollList;
+    private float m_SoudnTotalCount;
+    /// <summary>
+    /// 播放列表
+    /// </summary>
+    private readonly List<SearchSongsDataInfo.SongsInfo> m_PlayList = new List<SearchSongsDataInfo.SongsInfo>( );
     private void Awake( )
     {
+        m_Instance = this;
         m_MusicAnalysin = new CloudMusicAnalysin( );
         InitBindComponent( gameObject );
         InitInterfaceInfo( );
     }
+    private void Update( )
+    {
+        string[] timer = m_Source_DownLyric.GetSoundCurrentTimeMsec( ).Split( ':' );
+        string totalTimer;
+        if( timer[0].ToInt( ) > 0 )
+        {
+            totalTimer = m_Source_DownLyric.GetSoundCurrentTimeMsec( );
+        }
+        else
+        {
+            totalTimer = $"{timer[1]}:{timer[2]}";
+        }
+        m_TTxt_CurrentPlayTime.text = totalTimer;
+        m_Slider_SongsProgressBar.value = m_Source_DownLyric.time / m_SoudnTotalCount;
+        if( totalTimer == m_TotalTime )
+        {
+            MusicPlayOverCompeletn( );
+        }
+    }
 
     private void InitInterfaceInfo( )
     {
+        #region Txt
         m_TTxt_CloudMusicTitle.text = "Cloud emo music";
+        m_TTxt_CurrentPlayTime.text = "00:00";
+        m_TTxt_TotalPlayTime.text = "00:00";
+        #endregion
+
+        #region Button
         m_Btn_Search.onClick.AddListener( ( ) =>
         {
             if( m_TInput_SearchSongs.text.IsNullOrEmpty( ) )
@@ -29,13 +69,53 @@ public partial class MainInterface :MonoBehaviour
                 Debug.LogError( "搜索值为空" );
                 return;
             }
-            Debug.Log( $"当前搜索为{m_TInput_SearchSongs.text}" );
             StartCoroutine( RequestMusicInfo( m_TInput_SearchSongs.text ) );
         } );
-        m_Btn_PlayerMusic.onClick.AddListener( ( ) =>
+        m_Btn_PlayOrPause.onClick.AddListener( ( ) =>
         {
-            StartCoroutine( RequestPlayMusic( m_Source_DownLyric , m_songsData.Songs[m_CurrentIndex].ID ) );
+            if( m_Source_DownLyric.clip != null )
+            {
+                if( m_Source_DownLyric.isPlaying )
+                {
+                    m_Source_DownLyric.Pause( );
+                }
+                else
+                {
+                    m_Source_DownLyric.Play( );
+                }
+            }
         } );
+
+        m_Btn_OpenPlayList.onClick.AddListener( ( ) =>
+        {
+            foreach( var item in m_PlayList )
+            {
+                Debug.Log( $"歌曲ID为{item.ID}歌曲名字为{item.SongName}" );
+            }
+        } );
+        #endregion
+
+        m_ScrollList = m_Trans_CentreObjectBG.GetComponent<RecyclingListView>( );
+        #region event
+        m_ScrollList.ItemCallback = PopulateItem;
+        #endregion
+    }
+    /// <summary>
+    /// 播放歌曲
+    /// </summary>
+    /// <param name="id"></param>
+    public void PlayMusic( int id )
+    {
+        StartCoroutine( RequestPlayMusic( m_Source_DownLyric , id ) );
+    }
+
+    /// <summary>
+    /// 添加播放列表
+    /// </summary>
+    /// <param name="id"></param>
+    public void AddPlayList( SearchSongsDataInfo.SongsInfo data )
+    {
+        m_PlayList.Add( data );
     }
     /// <summary>
     /// 搜索歌曲
@@ -44,7 +124,7 @@ public partial class MainInterface :MonoBehaviour
     /// <returns></returns>
     private IEnumerator RequestMusicInfo( string key )
     {
-        string url = CloudMusicAPI.GetSongsInfo( key , 20 );
+        string url = CloudMusicAPI.GetSongsInfo( key , 30 );
         using UnityWebRequest request = new UnityWebRequest( url );
         //十秒的等待
         request.timeout = 10;
@@ -53,10 +133,11 @@ public partial class MainInterface :MonoBehaviour
         yield return request.SendWebRequest( );
         if( request.result == UnityWebRequest.Result.Success )
         {
-            m_songsData = m_MusicAnalysin.AnalysinSongsData( request.downloadHandler.text , 20 );
+            m_songsData = m_MusicAnalysin.AnalysinSongsData( request.downloadHandler.text , 30);
             if( m_songsData.Songs.Count > 0 )
             {
-                UpdateSongsInfo( 0 );
+                m_ScrollList.Clear( );
+                m_ScrollList.RowCount = m_songsData.Songs.Count;
             }
         }
         else
@@ -80,24 +161,40 @@ public partial class MainInterface :MonoBehaviour
         {
             PlaySongsInfo.SongsData temp = m_MusicAnalysin.AnalysinPlaySongData( request.downloadHandler.text );
             StartCoroutine( SearchLyric( id ) );
-            StartCoroutine( DownloadMusic( CloudMusicAPI.GetRequestMP3URL( temp ) , audio ) );
+            StartCoroutine( DownloadImage( temp.album ) );
+            StartCoroutine( DownloadMusic( CloudMusicAPI.GetRequestMP3URL( temp ) , audio , temp ) );
         }
     }
-
+    private string m_TotalTime;
     /// <summary>
     /// 下载music
     /// </summary>
     /// <param name="musicUrl"></param>
     /// <param name="type"></param>
     /// <returns></returns>
-    private IEnumerator DownloadMusic( string musicUrl , AudioSource audio , AudioType type = AudioType.MPEG )
+    private IEnumerator DownloadMusic( string musicUrl , AudioSource audio , PlaySongsInfo.SongsData songsData , AudioType type = AudioType.MPEG )
     {
         UnityWebRequest request = UnityWebRequestMultimedia.GetAudioClip( musicUrl , type );
         yield return request.SendWebRequest( );
         if( request.result == UnityWebRequest.Result.Success )
         {
             audio.clip = DownloadHandlerAudioClip.GetContent( request );
+            UpdateShowSongsInfo( songsData );
+            m_SoudnTotalCount = audio.clip.length;
+            string[] timer = audio.clip.GetAudioClipTotalTime( ).Split( ':' );
+            string totalTimer;
+            if( timer[0].ToInt( ) > 0 )
+            {
+                totalTimer = audio.clip.GetAudioClipTotalTime( );
+            }
+            else
+            {
+                totalTimer = $"{timer[1]}:{timer[2]}";
+            }
+            m_TotalTime = totalTimer;
+            m_TTxt_TotalPlayTime.text = totalTimer;
             audio.Play( );
+            m_IsPlayOver = false;
         }
     }
 
@@ -117,26 +214,65 @@ public partial class MainInterface :MonoBehaviour
         {
             LyricData.SongsLyricData lyricdata = new LyricData.SongsLyricData( );
             lyricdata = m_MusicAnalysin.AnlysinLyricData( request.downloadHandler.text );
+            foreach( var item in lyricdata.ArtistsLyric )
+            {
+                Debug.Log( $"{item.Key}:{item.Value}" );
+            }
         }
         else
         {
-            Debug.Log( "请求失败1488340401" );
+            Debug.Log( "请求失败" );
         }
     }
 
-
-    private void UpdateSongsInfo( int index )
+    /// <summary>
+    /// 下载图片
+    /// </summary>
+    /// <param name="data"></param>
+    /// <returns></returns>
+    private IEnumerator DownloadImage( PlaySongsInfo.AlbumInfo data )
     {
-        if( index >= m_songsData.Songs.Count )
+        UnityWebRequest request = UnityWebRequestTexture.GetTexture( data.blurPicUrl );
+        yield return request.SendWebRequest( );
+        if( request.result == UnityWebRequest.Result.Success )
         {
-            index = m_songsData.Songs.Count - 1;
+            Texture2D texture = ( (DownloadHandlerTexture)request.downloadHandler ).texture;
+            m_Img_SongsIcon.sprite = texture.Texture2DToSprite( );
         }
-        else if( index <= 0 )
+        else
         {
-            index = 0;
+            Debug.LogError( "下载图片错误" );
         }
-        m_TTxt_SongsDataSongsName.text = m_songsData.Songs[index].SongName;
-        m_TTxt_SongsDataLonghair.text = m_songsData.Songs[index].Artists.Name;
-        m_CurrentIndex = index;
+    }
+
+    private void UpdateShowSongsInfo( PlaySongsInfo.SongsData data )
+    {
+        m_TTxt_SongsName.text = data.name;
+        m_TTxt_Longhair.text = data.artists[0].name;
+    }
+
+    private void PopulateItem( RecyclingListViewItem item , int rowIndex )
+    {
+        var data = item as SongsData;
+        data.SetSongsDataInfo( m_songsData.Songs[rowIndex] );
+    }
+
+    private bool m_IsPlayOver;
+    /// <summary>
+    /// 播放完成回调
+    /// </summary>
+    private void MusicPlayOverCompeletn( )
+    {
+        if( m_IsPlayOver )
+        {
+            return;
+        }
+        m_IsPlayOver = true;
+        if( m_PlayList.Count != 0 )
+        {
+            PlayMusic( m_PlayList[0].ID );
+            m_PlayList.RemoveAt( 0 );
+        }
+
     }
 }

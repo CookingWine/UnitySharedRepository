@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: UIAutonBindingData
   m_EditorClassIdentifier: 
   m_CodePath: D:/UnityProject/UnitySharedRepository/Assets/Code/UI/UIBindingComponentBase
-  m_MainCodePath: D:/UnityProject/UnitySharedRepository/Assets/Code/UI/UIBiudCode
+  m_MainCodePath: D:/UnityProject/UnitySharedRepository/Assets/Code/UI/UIInterface
   m_Namespace: 
