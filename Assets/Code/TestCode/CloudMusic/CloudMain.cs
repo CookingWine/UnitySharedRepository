@@ -55,7 +55,6 @@ public class CloudMain :MonoBehaviour
     {
         if( !m_IsAutonLogin )
         {
-            Debug.Log( "等待加载登录界面" );
             LoadAsset.LoadPrefabAsset( "MusicLogin" , MainCanvas );
         }
     }

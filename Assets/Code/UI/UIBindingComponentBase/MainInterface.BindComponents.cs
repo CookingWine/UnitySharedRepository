@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-//自动生成于：2023/4/6 18:31:09
+//自动生成于：2023/4/7 14:24:02
 public partial class MainInterface
 {
 
@@ -24,7 +24,7 @@ public partial class MainInterface
 	private Button m_Btn_SongsIcon;
 	private TextMeshProUGUI m_TTxt_SongsName;
 	private TextMeshProUGUI m_TTxt_Longhair;
-	private Slider m_Slider_SongsProgressBar;
+	private Image m_Img_SongsProgressBar;
 	private TextMeshProUGUI m_TTxt_CurrentPlayTime;
 	private TextMeshProUGUI m_TTxt_TotalPlayTime;
 	private Image m_Img_LastSongs;
@@ -34,6 +34,7 @@ public partial class MainInterface
 	private Image m_Img_NextSongs;
 	private Button m_Btn_NextSongs;
 	private Button m_Btn_OpenPlayList;
+	private RectTransform m_Trans_3DAudioObject;
 
 	private void InitBindComponent(GameObject go)
 	{
@@ -56,7 +57,7 @@ public partial class MainInterface
 		m_Btn_SongsIcon = autoBindTool.GetBindComponent<Button>(15);
 		m_TTxt_SongsName = autoBindTool.GetBindComponent<TextMeshProUGUI>(16);
 		m_TTxt_Longhair = autoBindTool.GetBindComponent<TextMeshProUGUI>(17);
-		m_Slider_SongsProgressBar = autoBindTool.GetBindComponent<Slider>(18);
+		m_Img_SongsProgressBar = autoBindTool.GetBindComponent<Image>(18);
 		m_TTxt_CurrentPlayTime = autoBindTool.GetBindComponent<TextMeshProUGUI>(19);
 		m_TTxt_TotalPlayTime = autoBindTool.GetBindComponent<TextMeshProUGUI>(20);
 		m_Img_LastSongs = autoBindTool.GetBindComponent<Image>(21);
@@ -66,5 +67,6 @@ public partial class MainInterface
 		m_Img_NextSongs = autoBindTool.GetBindComponent<Image>(25);
 		m_Btn_NextSongs = autoBindTool.GetBindComponent<Button>(26);
 		m_Btn_OpenPlayList = autoBindTool.GetBindComponent<Button>(27);
+		m_Trans_3DAudioObject = autoBindTool.GetBindComponent<RectTransform>(28);
 	}
 }

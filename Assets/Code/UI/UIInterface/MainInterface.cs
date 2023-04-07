@@ -18,14 +18,41 @@ public partial class MainInterface :MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 音乐数据解析
+    /// </summary>
     private CloudMusicAnalysin m_MusicAnalysin;
+    /// <summary>
+    /// 请求的歌曲数据
+    /// </summary>
     private SearchSongsDataInfo.SongsData m_songsData;
+    /// <summary>
+    /// 显示请求歌曲的滚动列表
+    /// </summary>
     private RecyclingListView m_ScrollList;
+    /// <summary>
+    /// 歌词界面
+    /// </summary>
+    private GameObject m_LyricsInterface;
+    /// <summary>
+    /// 歌曲的总时间
+    /// </summary>
     private float m_SoudnTotalCount;
     /// <summary>
     /// 播放列表
     /// </summary>
     private readonly List<SearchSongsDataInfo.SongsInfo> m_PlayList = new List<SearchSongsDataInfo.SongsInfo>( );
+    public AudioSource Source_DownLyric { get { return m_Source_DownLyric; } }
+
+    public bool IsPlay { get { return m_Source_DownLyric.isPlaying; } }
+
+    public Sprite SongsIcon
+    {
+        get;
+        private set;
+    }
+
+    public int SongsID { get; private set; }
     private void Awake( )
     {
         m_Instance = this;
@@ -46,7 +73,7 @@ public partial class MainInterface :MonoBehaviour
             totalTimer = $"{timer[1]}:{timer[2]}";
         }
         m_TTxt_CurrentPlayTime.text = totalTimer;
-        m_Slider_SongsProgressBar.value = m_Source_DownLyric.time / m_SoudnTotalCount;
+        m_Img_SongsProgressBar.fillAmount= m_Source_DownLyric.time / m_SoudnTotalCount;
         if( totalTimer == m_TotalTime )
         {
             MusicPlayOverCompeletn( );
@@ -93,6 +120,18 @@ public partial class MainInterface :MonoBehaviour
                 Debug.Log( $"歌曲ID为{item.ID}歌曲名字为{item.SongName}" );
             }
         } );
+        m_Btn_SongsIcon.onClick.AddListener( ( ) =>
+        {
+            if( m_LyricsInterface == null )
+            {
+                m_LyricsInterface = CloudMain.Instance.LoadAsset.LoadPrefabAsset( "LyricsInterface" , transform );
+                m_LyricsInterface.SetActive( true );
+            }
+            else
+            {
+                m_LyricsInterface.SetActive( !m_LyricsInterface.activeInHierarchy );
+            }
+        } );
         #endregion
 
         m_ScrollList = m_Trans_CentreObjectBG.GetComponent<RecyclingListView>( );
@@ -106,6 +145,7 @@ public partial class MainInterface :MonoBehaviour
     /// <param name="id"></param>
     public void PlayMusic( int id )
     {
+        SongsID = id;
         StartCoroutine( RequestPlayMusic( m_Source_DownLyric , id ) );
     }
 
@@ -124,7 +164,7 @@ public partial class MainInterface :MonoBehaviour
     /// <returns></returns>
     private IEnumerator RequestMusicInfo( string key )
     {
-        string url = CloudMusicAPI.GetSongsInfo( key , 30 );
+        string url = CloudMusicAPI.GetSongsInfo( key , 100 );
         using UnityWebRequest request = new UnityWebRequest( url );
         //十秒的等待
         request.timeout = 10;
@@ -133,7 +173,7 @@ public partial class MainInterface :MonoBehaviour
         yield return request.SendWebRequest( );
         if( request.result == UnityWebRequest.Result.Success )
         {
-            m_songsData = m_MusicAnalysin.AnalysinSongsData( request.downloadHandler.text , 30);
+            m_songsData = CloudMusicAnalysin.AnalysinSongsData( request.downloadHandler.text , 100 );
             if( m_songsData.Songs.Count > 0 )
             {
                 m_ScrollList.Clear( );
@@ -144,6 +184,7 @@ public partial class MainInterface :MonoBehaviour
         {
             Debug.LogError( "请求失败" );
         }
+
     }
 
     /// <summary>
@@ -159,7 +200,7 @@ public partial class MainInterface :MonoBehaviour
         yield return request.SendWebRequest( );
         if( request.result == UnityWebRequest.Result.Success )
         {
-            PlaySongsInfo.SongsData temp = m_MusicAnalysin.AnalysinPlaySongData( request.downloadHandler.text );
+            PlaySongsInfo.SongsData temp = CloudMusicAnalysin.AnalysinPlaySongData( request.downloadHandler.text );
             StartCoroutine( SearchLyric( id ) );
             StartCoroutine( DownloadImage( temp.album ) );
             StartCoroutine( DownloadMusic( CloudMusicAPI.GetRequestMP3URL( temp ) , audio , temp ) );
@@ -213,7 +254,7 @@ public partial class MainInterface :MonoBehaviour
         if( request.result == UnityWebRequest.Result.Success )
         {
             LyricData.SongsLyricData lyricdata = new LyricData.SongsLyricData( );
-            lyricdata = m_MusicAnalysin.AnlysinLyricData( request.downloadHandler.text );
+            lyricdata = CloudMusicAnalysin.AnlysinLyricData( request.downloadHandler.text );
             foreach( var item in lyricdata.ArtistsLyric )
             {
                 Debug.Log( $"{item.Key}:{item.Value}" );
@@ -238,6 +279,7 @@ public partial class MainInterface :MonoBehaviour
         {
             Texture2D texture = ( (DownloadHandlerTexture)request.downloadHandler ).texture;
             m_Img_SongsIcon.sprite = texture.Texture2DToSprite( );
+            SongsIcon = m_Img_SongsIcon.sprite;
         }
         else
         {
@@ -273,6 +315,5 @@ public partial class MainInterface :MonoBehaviour
             PlayMusic( m_PlayList[0].ID );
             m_PlayList.RemoveAt( 0 );
         }
-
     }
 }

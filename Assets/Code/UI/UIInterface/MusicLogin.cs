@@ -42,26 +42,8 @@ public partial class MusicLogin :MonoBehaviour
 
         m_Btn_Login.onClick.AddListener( ( ) =>
         {
-            //if( m_TInput_PhoneNumber.text.IsNullOrEmpty( ) )
-            //{
-            //    Debug.Log( "手机号为空" );
-            //}
-            //if( !m_TInput_PhoneNumber.text.IsValidMobilePhoneNumber( ) )
-            //{
-            //    Debug.Log( "手机号不正确" );
-            //    return;
-            //}
-            //if( m_TInput_AuthCode.text.IsNullOrEmpty( ) )
-            //{
-            //    return;
-            //}
-            //Debug.Log( "内容为" + m_TInput_AuthCode.text );
-            //if( !VerificationAuthCode( m_TInput_AuthCode.text ) )
-            //{
-            //    return;
-            //}
             Debug.Log( "初始化个人信息,构建主界面" );
-            CloudMain.Instance.LoadAsset.LoadPrefabAsset( "MainInterface" , CloudMain.Instance.MainCanvas );
+            CloudMain.Instance.LoadAsset.LoadPrefabAsset( "CloundMusicInterface" , CloudMain.Instance.MainCanvas );
             Object.Destroy( gameObject );
         } );
 

@@ -33,6 +33,12 @@ public class SearchSongsDataInfo
         /// 歌曲总数量
         /// </summary>
         public int SongCount;
+
+        public void Clear( )
+        {
+            Songs.Clear( );
+            SongCount = 0;
+        }
     }
 
     /// <summary>
@@ -521,7 +527,7 @@ public class CloudMusicAnalysin
     /// <param name="data"></param>
     /// <param name="totalCount">每次拉取歌曲的数量</param>
     /// <returns></returns>
-    public SearchSongsDataInfo.SongsData AnalysinSongsData( string data , int totalCount = 1 )
+    public static SearchSongsDataInfo.SongsData AnalysinSongsData( string data , int totalCount = 1 )
     {
         SearchSongsDataInfo.SongsData songs = new SearchSongsDataInfo.SongsData( );
         JSONNode json = JSON.Parse( data );
@@ -579,7 +585,7 @@ public class CloudMusicAnalysin
     /// </summary>
     /// <param name="data"></param>
     /// <returns></returns>
-    public PlaySongsInfo.SongsData AnalysinPlaySongData( string data )
+    public static PlaySongsInfo.SongsData AnalysinPlaySongData( string data )
     {
         PlaySongsInfo.SongsData songs = new PlaySongsInfo.SongsData( );
         JSONNode json = JSON.Parse( data );
@@ -638,7 +644,7 @@ public class CloudMusicAnalysin
     /// </summary>
     /// <param name="data"></param>
     /// <returns></returns>
-    public LyricData.SongsLyricData AnlysinLyricData( string data )
+    public static LyricData.SongsLyricData AnlysinLyricData( string data )
     {
         LyricData.SongsLyricData temp = new LyricData.SongsLyricData( );
         JSONNode json = JSON.Parse( data );
@@ -655,7 +661,7 @@ public class CloudMusicAnalysin
     /// </summary>
     /// <param name="data"></param>
     /// <returns></returns>
-    private SearchSongsDataInfo.ArtistsInfo GetArtistsInfo( JSONNode data )
+    private static SearchSongsDataInfo.ArtistsInfo GetArtistsInfo( JSONNode data )
     {
         SearchSongsDataInfo.ArtistsInfo temp = new SearchSongsDataInfo.ArtistsInfo( );
         temp.ID = data["id"];
@@ -675,7 +681,7 @@ public class CloudMusicAnalysin
     /// </summary>
     /// <param name="data"></param>
     /// <returns></returns>
-    private SearchSongsDataInfo.AlbumInfo GetAlbumInfos( JSONNode data )
+    private static SearchSongsDataInfo.AlbumInfo GetAlbumInfos( JSONNode data )
     {
         SearchSongsDataInfo.AlbumInfo temp = new SearchSongsDataInfo.AlbumInfo( );
         temp.ID = data["id"];
@@ -701,7 +707,7 @@ public class CloudMusicAnalysin
         return temp;
     }
 
-    private PlaySongsInfo.MusicInfo GetMusicInfo( JSONNode data )
+    private static PlaySongsInfo.MusicInfo GetMusicInfo( JSONNode data )
     {
         PlaySongsInfo.MusicInfo temp = new PlaySongsInfo.MusicInfo
         {
@@ -719,7 +725,7 @@ public class CloudMusicAnalysin
         return temp;
     }
 
-    private PlaySongsInfo.ArtistsInfo[] GetArtistsData( JSONNode data )
+    private static PlaySongsInfo.ArtistsInfo[] GetArtistsData( JSONNode data )
     {
         PlaySongsInfo.ArtistsInfo[] temp = new PlaySongsInfo.ArtistsInfo[data["artists"].Count];
         for( int i = 0 ; i < temp.Length ; i++ )
@@ -732,7 +738,7 @@ public class CloudMusicAnalysin
         return temp;
     }
 
-    private PlaySongsInfo.ArtistsInfo GetArtistsPlayData( JSONNode json )
+    private static PlaySongsInfo.ArtistsInfo GetArtistsPlayData( JSONNode json )
     {
         PlaySongsInfo.ArtistsInfo temp = new PlaySongsInfo.ArtistsInfo( )
         {
@@ -752,7 +758,7 @@ public class CloudMusicAnalysin
         return temp;
     }
 
-    private PlaySongsInfo.AlbumInfo GetAlbumData( JSONNode data )
+    private static PlaySongsInfo.AlbumInfo GetAlbumData( JSONNode data )
     {
         PlaySongsInfo.AlbumInfo temp = new PlaySongsInfo.AlbumInfo( )
         {
@@ -789,7 +795,7 @@ public class CloudMusicAnalysin
         return temp;
     }
 
-    private Dictionary<string , string> ArtistsSongsLyric( string data )
+    private static Dictionary<string , string> ArtistsSongsLyric( string data )
     {
         Debug.Log( data );
         Dictionary<string , string> temp = new Dictionary<string , string>( );
@@ -854,8 +860,22 @@ public class CloudMusicAPI
     {
         return $"http://netease-cloud-music-api-beta-lyart.vercel.app/captcha/verify?phone={phone}&captcha={code}";
     }
+
+    /// <summary>
+    /// 获取歌曲评论
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="total"></param>
+    /// <returns></returns>
+    public static string GetRequestSongsCommentData( int id , int total = 1 )
+    {
+        return $"http://cloud-music.pl-fe.cn/comment/music?id={id}&limit={total}";
+    }
 }
 
+/// <summary>
+/// 歌词数据
+/// </summary>
 public class LyricData
 {
     public struct SongsLyricData
@@ -876,4 +896,12 @@ public class LyricData
 
         public int code;
     }
+}
+
+/// <summary>
+/// 评论数据
+/// </summary>
+public class SongsCommentData
+{
+
 }
