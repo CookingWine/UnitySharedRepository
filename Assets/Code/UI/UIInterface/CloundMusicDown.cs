@@ -19,10 +19,9 @@ public partial class CloundMusicDown :MonoBehaviour
     /// </summary>
     private string m_TotalMusicTimer;
 
-    /// <summary>
-    /// 当前播放时间
-    /// </summary>
-    private string m_CurrentMusicTimer;
+    private float m_TotalPlayMusicTimer;
+
+    public bool IsPlay { get; set; }
 
 
     private void Awake( )
@@ -30,16 +29,38 @@ public partial class CloundMusicDown :MonoBehaviour
         InitBindComponent( gameObject );
         InitializationData( );
     }
+
     private void Update( )
     {
         if( m_Source_CloundMusic.clip == null )
         {
             return;
         }
-
-        if( m_CurrentMusicTimer == m_TotalMusicTimer )
+        else
         {
-
+            IsPlay = true;
+            string[] timer = m_Source_CloundMusic.GetSoundCurrentTimeMsec( ).Split( ':' );
+            string totalTime;
+            if( timer[0].ToInt( ) > 0 )
+            {
+                totalTime = m_Source_CloundMusic.GetSoundCurrentTime( );
+            }
+            else
+            {
+                totalTime = $"{timer[1]}:{timer[2]}";
+            }
+            m_Txt_CurrentTimer.text = totalTime;
+            m_Img_ProgressBar.fillAmount = m_Source_CloundMusic.time / m_TotalPlayMusicTimer;
+            if( totalTime == m_TotalMusicTimer )
+            {
+                IsPlay = false;
+                m_TotalMusicTimer = "00:00";
+                if( CloundMusicInterface.Instance.LyricsPortrayData != null )
+                {
+                    CloundMusicInterface.Instance.LyricsPortrayData.UpdateLyricsInfo( null );
+                }
+                PlayOverCompelent( );
+            }
         }
     }
 
@@ -50,7 +71,8 @@ public partial class CloundMusicDown :MonoBehaviour
     {
         m_Img_SongsIcon.SetColorAlpha( 0 );
         m_TotalMusicTimer = "00:00";
-        m_CurrentMusicTimer = "00:00";
+        m_Slider_Volume.value = 0.5f;
+        m_Source_CloundMusic.volume = 0.5f;
         m_Btn_PlayOrPauser.onClick.AddListener( ( ) =>
         {
             if( m_Source_CloundMusic.clip != null )
@@ -65,8 +87,17 @@ public partial class CloundMusicDown :MonoBehaviour
                 }
             }
         } );
-
+        m_Btn_Volume.onClick.AddListener( ( ) =>
+        {
+            m_Slider_Volume.SetActive( !m_Slider_Volume.gameObject.activeInHierarchy );
+        } );
+        m_Btn_SongsIcon.onClick.AddListener( ( ) =>
+        {
+            CloundMusicInterface.Instance.LyricsPortrayData
+            .UpdateLyricsInfo( SongsIcon ).SetActive( !CloundMusicInterface.Instance.LyricsPortrayData.gameObject.activeInHierarchy );
+        } );
         m_Img_ProgressBar.fillAmount = 0;
+        m_Slider_Volume.onValueChanged.AddListener( OnChangeVolumeCompelet );
     }
     /// <summary>
     /// 播放
@@ -137,6 +168,19 @@ public partial class CloundMusicDown :MonoBehaviour
         if( request.result == UnityWebRequest.Result.Success )
         {
             AudioClip clip = DownloadHandlerAudioClip.GetContent( request );
+            m_TotalPlayMusicTimer = clip.length;
+            string[] timer = clip.GetAudioClipTotalTime( ).Split( ':' );
+            string totalTimer;
+            if( timer[0].ToInt( ) > 0 )
+            {
+                totalTimer = clip.GetAudioClipTotalTime( );
+            }
+            else
+            {
+                totalTimer = $"{timer[1]}:{timer[2]}";
+            }
+            m_TotalMusicTimer = totalTimer;
+            m_Txt_TotalTimer.text = totalTimer;
             m_Source_CloundMusic.clip = clip;
             m_Source_CloundMusic.Play( );
         }
@@ -166,5 +210,15 @@ public partial class CloundMusicDown :MonoBehaviour
         {
             Debug.LogError( "下载失败" + request.error );
         }
+    }
+
+    private void OnChangeVolumeCompelet( float value )
+    {
+        m_Source_CloundMusic.volume = value;
+    }
+
+    private void PlayOverCompelent( )
+    {
+
     }
 }

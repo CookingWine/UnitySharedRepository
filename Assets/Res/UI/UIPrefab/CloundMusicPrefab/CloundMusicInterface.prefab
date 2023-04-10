@@ -65,7 +65,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2000278554001438184}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -140,8 +140,8 @@ RectTransform:
   m_Children:
   - {fileID: 2000278553582028118}
   - {fileID: 2000278554633890181}
-  - {fileID: 2000278553320893762}
   - {fileID: 2000278554262640847}
+  - {fileID: 2000278553320893762}
   - {fileID: 2000278553300770720}
   - {fileID: 2000278554729400797}
   m_Father: {fileID: 0}
@@ -169,23 +169,23 @@ MonoBehaviour:
     BindComponent: {fileID: 2000278553582028118}
   - Name: Trans_LeftInterface
     BindComponent: {fileID: 2000278554633890181}
-  - Name: Trans_DownInterface
-    BindComponent: {fileID: 2000278553320893762}
   - Name: Trans_RigthInterface
     BindComponent: {fileID: 2000278554262640847}
+  - Name: Trans_DownInterface
+    BindComponent: {fileID: 2000278553320893762}
   - Name: Trans_FullScreen
     BindComponent: {fileID: 2000278553300770720}
   - Name: Trans_PoPInterface
     BindComponent: {fileID: 2000278554729400797}
   m_ClassName: CloundMusicInterface
   m_Namespace: 
-  m_CodePath: D:/UnityProject/UnitySharedRepository/Assets/Code/UI/UIBindingComponentBase
+  m_CodePath: F:/Project/UnityProject/UnitySharedRepository/Assets/Code/UI/UIBindingComponentBase
   m_MainCodePath: D:/UnityProject/UnitySharedRepository/Assets/Code/UI/UIInterface
   m_BindComponent:
   - {fileID: 2000278553582028118}
   - {fileID: 2000278554633890181}
-  - {fileID: 2000278553320893762}
   - {fileID: 2000278554262640847}
+  - {fileID: 2000278553320893762}
   - {fileID: 2000278553300770720}
   - {fileID: 2000278554729400797}
 --- !u!114 &569037390461282570
@@ -229,7 +229,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2000278554001438184}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}

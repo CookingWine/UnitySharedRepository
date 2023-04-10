@@ -102,7 +102,7 @@ public partial class MusicLogin :MonoBehaviour
 
     private IEnumerator SendPhoneCode( )
     {
-        string url = "http://cloud-music.pl-fe.cn/comment/sent?phone=15139659175";
+        string url = "http://music.163.com/api/captcha/sent?phone=15139659175";
 
         using UnityWebRequest request = new UnityWebRequest( url );
         request.timeout = 5;

@@ -26,7 +26,7 @@ public partial class SerachSongsDataItem :MonoBehaviour
             {
                 return;
             }
-            Debug.Log( $"开始播放ID为{m_SongsData.ID}的歌曲状态为{m_SongsData.Status}" );
+            CloundMusicInterface.Instance.CloundMusicDownData.PlayCloundMusic( m_SongsData );
         } );
 
         m_Btn_AddMusicToList.onClick.AddListener( ( ) =>
@@ -61,6 +61,7 @@ public partial class SerachSongsDataItem :MonoBehaviour
         m_Txt_ArtistsName.text = m_SongsData.Artists.Name;
         m_Txt_AlbumInfo.text = m_SongsData.Album.Name;
         m_Txt_PlayTotalTime.text = GetPlayTotalTime( m_SongsData.Duration );
+        m_Img_VipMusic.SetActive( m_SongsData.fee == 1 );
     }
 
     private string GetPlayTotalTime( long time )
@@ -69,8 +70,6 @@ public partial class SerachSongsDataItem :MonoBehaviour
         string formattedTime = string.Format( "{0:D2}:{1:D2}" ,
                                 timeSpan.Minutes + timeSpan.Hours * 60 ,
                                 timeSpan.Seconds );
-
         return formattedTime;
-
     }
 }

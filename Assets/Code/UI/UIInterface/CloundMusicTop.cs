@@ -50,7 +50,7 @@ public partial class CloundMusicTop :MonoBehaviour
         if( request.result == UnityWebRequest.Result.Success )
         {
             SearchSongsDataInfo.SongsData music = CloudMusicAnalysin.AnalysinSongsData( request.downloadHandler.text , 10 );
-            Debug.Log( request.downloadHandler.text );
+            //Debug.Log( request.downloadHandler.text );
             CloundMusicInterface.Instance.SerachSongsInfoData.SetActiveInHierarchy( true ).AddData( music );
         }
         else

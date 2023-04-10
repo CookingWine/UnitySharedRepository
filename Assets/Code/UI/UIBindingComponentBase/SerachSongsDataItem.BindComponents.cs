@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-//自动生成于：2023/4/10 17:02:38
+//自动生成于：2023/4/10 21:02:08
 public partial class SerachSongsDataItem
 {
 
@@ -13,6 +13,7 @@ public partial class SerachSongsDataItem
 	private Image m_Img_Heat;
 	private Text m_Txt_PlayTotalTime;
 	private Button m_Btn_AddMusicToList;
+	private Image m_Img_VipMusic;
 
 	private void InitBindComponent(GameObject go)
 	{
@@ -24,5 +25,6 @@ public partial class SerachSongsDataItem
 		m_Img_Heat = autoBindTool.GetBindComponent<Image>(4);
 		m_Txt_PlayTotalTime = autoBindTool.GetBindComponent<Text>(5);
 		m_Btn_AddMusicToList = autoBindTool.GetBindComponent<Button>(6);
+		m_Img_VipMusic = autoBindTool.GetBindComponent<Image>(7);
 	}
 }

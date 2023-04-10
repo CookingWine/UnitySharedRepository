@@ -16,7 +16,7 @@ public partial class CloundMusicInterface :MonoBehaviour
         }
     }
 
-    #region Const
+    #region string
     /// <summary>
     /// 顶部UI的名字
     /// </summary>
@@ -31,6 +31,8 @@ public partial class CloundMusicInterface :MonoBehaviour
     /// 搜索界面
     /// </summary>
     private readonly string SerachSongsInfo = "SerachSongsInfo";
+
+    private readonly string LyricsPortrayInfo = "LyricsPortray";
     #endregion
 
     #region 
@@ -40,6 +42,8 @@ public partial class CloundMusicInterface :MonoBehaviour
     public CloundMusicDown CloundMusicDownData { get; private set; }
 
     public SerachSongsInfo SerachSongsInfoData { get; private set; }
+
+    public LyricsPortray LyricsPortrayData { get; private set; }
 
     #endregion
 
@@ -61,5 +65,7 @@ public partial class CloundMusicInterface :MonoBehaviour
         //加载搜索界面
         SerachSongsInfoData = CloudMain.Instance.LoadAsset.LoadPrefabAsset( SerachSongsInfo , m_Trans_RigthInterface ).GetComponent<SerachSongsInfo>( );
         SerachSongsInfoData.SetActiveInHierarchy( false );
+        LyricsPortrayData = CloudMain.Instance.LoadAsset.LoadPrefabAsset( LyricsPortrayInfo , m_Trans_FullScreen ).GetComponent<LyricsPortray>( );
+        LyricsPortrayData.SetActive( false );
     }
 }
