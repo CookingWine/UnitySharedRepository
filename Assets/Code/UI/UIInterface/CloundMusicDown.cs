@@ -6,6 +6,9 @@ using UnityEngine.Networking;
 //自动生成于:2023/4/7 15:42:53
 public partial class CloundMusicDown :MonoBehaviour
 {
+    /// <summary>
+    /// 播放列表
+    /// </summary>
     private readonly List<SearchSongsDataInfo.SongsInfo> m_PlayMusicList = new List<SearchSongsDataInfo.SongsInfo>( );
 
     public Sprite SongsIcon { get; private set; }
@@ -62,6 +65,8 @@ public partial class CloundMusicDown :MonoBehaviour
                 }
             }
         } );
+
+        m_Img_ProgressBar.fillAmount = 0;
     }
     /// <summary>
     /// 播放

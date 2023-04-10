@@ -1,4 +1,6 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public partial class MusicLogin :MonoBehaviour
 {
@@ -42,22 +44,28 @@ public partial class MusicLogin :MonoBehaviour
 
         m_Btn_Login.onClick.AddListener( ( ) =>
         {
-            Debug.Log( "初始化个人信息,构建主界面" );
-            CloudMain.Instance.LoadAsset.LoadPrefabAsset( "CloundMusicInterface" , CloudMain.Instance.MainCanvas );
-            Object.Destroy( gameObject );
+            if( VerificationAuthCode( m_TInput_AuthCode.text ) )
+            {
+                CloudMain.Instance.LoadAsset.LoadPrefabAsset( "CloundMusicInterface" , CloudMain.Instance.MainCanvas );
+                Object.Destroy( gameObject );
+            }
+            else
+            {
+                Debug.LogError( "不正确" );
+            }
         } );
 
         m_Btn_SpeedCode.onClick.AddListener( ( ) =>
         {
-            if( !m_TInput_PhoneNumber.text.IsValidMobilePhoneNumber( ) )
-            {
-                Debug.Log( "手机号不正确" );
-                return;
-            }
-            if( m_TInput_PhoneNumber.text.IsNullOrEmpty( ) )
-            {
-                return;
-            }
+            //if( !m_TInput_PhoneNumber.text.IsValidMobilePhoneNumber( ) )
+            //{
+            //    Debug.Log( "手机号不正确" );
+            //    return;
+            //}
+            //if( m_TInput_PhoneNumber.text.IsNullOrEmpty( ) )
+            //{
+            //    return;
+            //}
             SpeedCode( );
         } );
     }
@@ -66,7 +74,6 @@ public partial class MusicLogin :MonoBehaviour
     {
         m_TTxt_LoginBtnTxt.text = "开始emo";
     }
-
     /// <summary>
     /// 验证，验证码是否正确
     /// </summary>
@@ -74,7 +81,12 @@ public partial class MusicLogin :MonoBehaviour
     /// <returns></returns>
     private bool VerificationAuthCode( string code )
     {
-        return !code.IsNullOrEmpty( );
+        //StartCoroutine( PhoneCode( code ) );
+        //if( !state )
+        //{
+        //    return false;
+        //}
+        return true;
     }
 
     /// <summary>
@@ -83,5 +95,46 @@ public partial class MusicLogin :MonoBehaviour
     private void SpeedCode( )
     {
         Debug.Log( "发送验证码" );
+        StartCoroutine( SendPhoneCode( ) );
+
+
+    }
+
+    private IEnumerator SendPhoneCode( )
+    {
+        string url = "http://cloud-music.pl-fe.cn/comment/sent?phone=15139659175";
+
+        using UnityWebRequest request = new UnityWebRequest( url );
+        request.timeout = 5;
+        DownloadHandlerBuffer data = new DownloadHandlerBuffer( );
+        request.downloadHandler = data;
+        yield return request.SendWebRequest( );
+        if( request.result == UnityWebRequest.Result.Success )
+        {
+            Debug.Log( $"请求成功->{request.downloadHandler.text}" );
+        }
+        else
+        {
+            Debug.LogError( "请求失败" );
+        }
+    }
+
+    private IEnumerator PhoneCode( string code )
+    {
+        string url = "http://music.163.com/captcha/verify?phone=15139659175&captcha=" + code;
+
+        using UnityWebRequest request = new UnityWebRequest( url );
+        request.timeout = 5;
+        DownloadHandlerBuffer data = new DownloadHandlerBuffer( );
+        request.downloadHandler = data;
+        yield return request.SendWebRequest( );
+        if( request.result == UnityWebRequest.Result.Success )
+        {
+            Debug.Log( $"请求成功->{request.downloadHandler.text}" );
+        }
+        else
+        {
+            Debug.LogError( "请求失败" );
+        }
     }
 }

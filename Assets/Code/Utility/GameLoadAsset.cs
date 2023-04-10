@@ -18,6 +18,7 @@ public class GameLoadAsset
     private readonly Dictionary<string , string> m_UIPrefab = new Dictionary<string , string>( );
     public GameLoadAsset( )
     {
+        m_UIPrefab.Clear( );
         UIPrefabData data = JsonExtend.AnalysisJson<UIPrefabData>( m_UIPrefabPath );
         for( int i = 0 ; i < data.UIPrefabDatas.Count ; i++ )
         {
@@ -77,6 +78,7 @@ public class GameLoadAsset
             else
             {
                 Debug.LogError( $"当前资源列表内没有该资源{objtName}" );
+                return null;
             }
         }
 #endif

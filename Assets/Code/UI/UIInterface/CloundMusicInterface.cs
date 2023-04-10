@@ -20,11 +20,27 @@ public partial class CloundMusicInterface :MonoBehaviour
     /// <summary>
     /// 顶部UI的名字
     /// </summary>
-    private const string CloundMusicTop = "CloundMusicTop";
+    private readonly string CloundMusicTop = "CloundMusicTop";
+
+    /// <summary>
+    /// 底部UI
+    /// </summary>
+    private readonly string CloundMusicDown = "CloundMusicDown";
+
+    /// <summary>
+    /// 搜索界面
+    /// </summary>
+    private readonly string SerachSongsInfo = "SerachSongsInfo";
     #endregion
 
     #region 
+
+    public CloundMusicTop CloundMusicTopData { get; private set; }
+
     public CloundMusicDown CloundMusicDownData { get; private set; }
+
+    public SerachSongsInfo SerachSongsInfoData { get; private set; }
+
     #endregion
 
     private void Awake( )
@@ -37,7 +53,13 @@ public partial class CloundMusicInterface :MonoBehaviour
     private void InitializationLoadData( )
     {
         //加载顶部的UI
-        CloundMusicDownData = CloudMain.Instance.LoadAsset.LoadPrefabAsset( CloundMusicTop , m_Trans_TopInterface ).GetComponent<CloundMusicDown>( );
+        CloundMusicTopData = CloudMain.Instance.LoadAsset.LoadPrefabAsset( CloundMusicTop , m_Trans_TopInterface ).GetComponent<CloundMusicTop>( );
 
+        //加载底部UI
+        CloundMusicDownData = CloudMain.Instance.LoadAsset.LoadPrefabAsset( CloundMusicDown , m_Trans_DownInterface ).GetComponent<CloundMusicDown>( );
+
+        //加载搜索界面
+        SerachSongsInfoData = CloudMain.Instance.LoadAsset.LoadPrefabAsset( SerachSongsInfo , m_Trans_RigthInterface ).GetComponent<SerachSongsInfo>( );
+        SerachSongsInfoData.SetActiveInHierarchy( false );
     }
 }

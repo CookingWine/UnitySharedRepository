@@ -50,6 +50,7 @@ public class SearchSongsDataInfo
         /// 歌曲ID
         /// </summary>
         public int ID;
+
         /// <summary>
         /// 歌曲名
         /// </summary>
@@ -95,7 +96,11 @@ public class SearchSongsDataInfo
         public long MVID;
 
         /// <summary>
-        /// 费用
+        /// 0: 免费或无版权 
+        /// 1: VIP 歌曲 
+        /// 4: 购买专辑 
+        /// 8: 非会员可免费播放低音质，会员可播放高音质及下载  
+        /// fee 为 1 或 8 的歌曲均可单独购买 2 元单曲
         /// </summary>
         public long fee;
 
@@ -826,7 +831,7 @@ public class CloudMusicAPI
     /// <param name="songsName">歌曲名</param>
     /// <param name="total">请求的总数量(不代表总歌曲的数量,仅仅代表当前请求会请求多少个歌曲)</param>
     /// <returns>url</returns>
-    public static string GetSongsInfo( string songsName , int total = 10 )
+    public static string GetSongsInfo( string songsName , int total = 30 )
     {
         return URL + $"search/get/web?csrf_token=&type=1&offset=0&total=true&limit={total}&s={songsName}";
     }

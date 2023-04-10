@@ -1,4 +1,6 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 
 //自动生成于:2023/4/7 14:54:32
@@ -14,6 +16,7 @@ public partial class CloundMusicTop :MonoBehaviour
     {
         m_Txt_MusicTitle.text = "Clound music";
         m_Btn_SearchSongs.onClick.AddListener( ClickSearchSongsBtnCallback );
+        Debug.Log( "初始化数据完毕" );
     }
     /// <summary>
     /// 设置头像
@@ -33,6 +36,26 @@ public partial class CloundMusicTop :MonoBehaviour
         {
             return;
         }
+        StartCoroutine( RequestMusicCount( m_Input_SearchSongs.text ) );
+    }
 
+    private IEnumerator RequestMusicCount( string key )
+    {
+        string url = CloudMusicAPI.GetSongsInfo( key , 10 );
+        using UnityWebRequest request = new UnityWebRequest( url );
+        request.timeout = 5;
+        DownloadHandlerBuffer data = new DownloadHandlerBuffer( );
+        request.downloadHandler = data;
+        yield return request.SendWebRequest( );
+        if( request.result == UnityWebRequest.Result.Success )
+        {
+            SearchSongsDataInfo.SongsData music = CloudMusicAnalysin.AnalysinSongsData( request.downloadHandler.text , 10 );
+            Debug.Log( request.downloadHandler.text );
+            CloundMusicInterface.Instance.SerachSongsInfoData.SetActiveInHierarchy( true ).AddData( music );
+        }
+        else
+        {
+            Debug.LogError( "请求失败" );
+        }
     }
 }
