@@ -68,9 +68,8 @@ public class ExcelReadEditor
 public class UpdateExcelEditor :Editor
 {
     private readonly static string m_UIPrefabPath = Application.dataPath + "/AssetExcelData~/UIPrefabData.xlsx";
-
+    private readonly static string m_CodePath = Application.dataPath + "/Code/Utility/ExcelConfigData.cs";
     private static Dictionary<string , IndividualData> m_ExcelDicData = new Dictionary<string , IndividualData>( );
-
     private readonly static UIPrefabData uIPrefabData = new UIPrefabData( );
     [MenuItem( "Tools/更新UI数据" , false , 10 )]
     public static void ManualOperationCheckLanguage( )
@@ -84,6 +83,18 @@ public class UpdateExcelEditor :Editor
             uIPrefabData.UIPrefabDatas.Add( data );
         }
         JsonExtend.WriterJson( uIPrefabData , Application.dataPath + "/Res/Confing/UIPrefabData.json" );
+
+        using( StreamWriter sw = new StreamWriter( m_CodePath ) )
+        {
+            sw.WriteLine( "public class ExcelConfigData" );
+            sw.WriteLine( "{" );
+            foreach( var item in m_ExcelDicData )
+            {
+                //sw.WriteLine( $"\t ///<summary>{null}</summary>" );
+                sw.WriteLine( $"\t public static string {item.Key}" + "{ get { return \"" + item.Key + "\";} }" );
+            }
+            sw.WriteLine( "}" );
+        }
         AssetDatabase.Refresh( );
         Debug.Log( "数据更新完毕" );
     }

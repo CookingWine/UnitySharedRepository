@@ -16,25 +16,6 @@ public partial class CloundMusicInterface :MonoBehaviour
         }
     }
 
-    #region string
-    /// <summary>
-    /// 顶部UI的名字
-    /// </summary>
-    private readonly string CloundMusicTop = "CloundMusicTop";
-
-    /// <summary>
-    /// 底部UI
-    /// </summary>
-    private readonly string CloundMusicDown = "CloundMusicDown";
-
-    /// <summary>
-    /// 搜索界面
-    /// </summary>
-    private readonly string SerachSongsInfo = "SerachSongsInfo";
-
-    private readonly string LyricsPortrayInfo = "LyricsPortray";
-    #endregion
-
     #region 
 
     public CloundMusicTop CloundMusicTopData { get; private set; }
@@ -44,6 +25,8 @@ public partial class CloundMusicInterface :MonoBehaviour
     public SerachSongsInfo SerachSongsInfoData { get; private set; }
 
     public LyricsPortray LyricsPortrayData { get; private set; }
+
+    public CloundMusicPlayList MusicPlayList { get; private set; }
 
     #endregion
 
@@ -57,15 +40,19 @@ public partial class CloundMusicInterface :MonoBehaviour
     private void InitializationLoadData( )
     {
         //加载顶部的UI
-        CloundMusicTopData = CloudMain.Instance.LoadAsset.LoadPrefabAsset( CloundMusicTop , m_Trans_TopInterface ).GetComponent<CloundMusicTop>( );
+        CloundMusicTopData = CloudMain.Instance.LoadAsset.LoadPrefabAsset( ExcelConfigData.CloundMusicTop , m_Trans_TopInterface ).GetComponent<CloundMusicTop>( );
 
         //加载底部UI
-        CloundMusicDownData = CloudMain.Instance.LoadAsset.LoadPrefabAsset( CloundMusicDown , m_Trans_DownInterface ).GetComponent<CloundMusicDown>( );
+        CloundMusicDownData = CloudMain.Instance.LoadAsset.LoadPrefabAsset( ExcelConfigData.CloundMusicDown , m_Trans_DownInterface ).GetComponent<CloundMusicDown>( );
 
         //加载搜索界面
-        SerachSongsInfoData = CloudMain.Instance.LoadAsset.LoadPrefabAsset( SerachSongsInfo , m_Trans_RigthInterface ).GetComponent<SerachSongsInfo>( );
+        SerachSongsInfoData = CloudMain.Instance.LoadAsset.LoadPrefabAsset( ExcelConfigData.SerachSongsInfo , m_Trans_RigthInterface ).GetComponent<SerachSongsInfo>( );
         SerachSongsInfoData.SetActiveInHierarchy( false );
-        LyricsPortrayData = CloudMain.Instance.LoadAsset.LoadPrefabAsset( LyricsPortrayInfo , m_Trans_FullScreen ).GetComponent<LyricsPortray>( );
+
+        LyricsPortrayData = CloudMain.Instance.LoadAsset.LoadPrefabAsset( ExcelConfigData.LyricsPortray , m_Trans_FullScreen ).GetComponent<LyricsPortray>( );
         LyricsPortrayData.SetActive( false );
+
+        MusicPlayList = CloudMain.Instance.LoadAsset.LoadPrefabAsset( ExcelConfigData.CloundMusicPlayList , m_Trans_PoPInterface ).GetComponent<CloundMusicPlayList>( );
+        MusicPlayList.SetActive( false );
     }
 }

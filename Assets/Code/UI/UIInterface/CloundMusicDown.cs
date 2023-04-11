@@ -1,16 +1,10 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
 //自动生成于:2023/4/7 15:42:53
 public partial class CloundMusicDown :MonoBehaviour
 {
-    /// <summary>
-    /// 播放列表
-    /// </summary>
-    private readonly List<SearchSongsDataInfo.SongsInfo> m_PlayMusicList = new List<SearchSongsDataInfo.SongsInfo>( );
-
     public Sprite SongsIcon { get; private set; }
     public int CurrentPlayIndex { get; private set; }
 
@@ -96,6 +90,10 @@ public partial class CloundMusicDown :MonoBehaviour
             CloundMusicInterface.Instance.LyricsPortrayData
             .UpdateLyricsInfo( SongsIcon ).SetActive( !CloundMusicInterface.Instance.LyricsPortrayData.gameObject.activeInHierarchy );
         } );
+        m_Btn_PlayList.onClick.AddListener( ( ) =>
+        {
+            CloundMusicInterface.Instance.MusicPlayList.SetActive( !CloundMusicInterface.Instance.MusicPlayList.gameObject.activeInHierarchy );
+        } );
         m_Img_ProgressBar.fillAmount = 0;
         m_Slider_Volume.onValueChanged.AddListener( OnChangeVolumeCompelet );
     }
@@ -105,31 +103,10 @@ public partial class CloundMusicDown :MonoBehaviour
     /// <param name="data"></param>
     public void PlayCloundMusic( SearchSongsDataInfo.SongsInfo data )
     {
-        if( !m_PlayMusicList.Contains( data ) )
-        {
-            m_PlayMusicList.Add( data );
-            CurrentPlayIndex = m_PlayMusicList.Count - 1;
-        }
-        else
-        {
-            CurrentPlayIndex = m_PlayMusicList.IndexOf( data );
-        }
+        CurrentPlayIndex = CloundMusicInterface.Instance.MusicPlayList.AddToPlayList( data );
         StartCoroutine( RequestPlayMusic( data.ID ) );
         m_Txt_SongsName.text = data.SongName;
         m_Txt_ArtistsName.text = data.Artists.Name;
-    }
-
-    /// <summary>
-    /// 添加到播放列表
-    /// </summary>
-    public void AddMusicToPlayList( SearchSongsDataInfo.SongsInfo music )
-    {
-        if( m_PlayMusicList.Contains( music ) )
-        {
-            Debug.LogError( "当前列表内有该歌曲" );
-            return;
-        }
-        m_PlayMusicList.Add( music );
     }
 
     /// <summary>
@@ -217,8 +194,11 @@ public partial class CloundMusicDown :MonoBehaviour
         m_Source_CloundMusic.volume = value;
     }
 
+    /// <summary>
+    /// 播放完成
+    /// </summary>
     private void PlayOverCompelent( )
     {
-
+        Debug.Log( "当前索引为" );
     }
 }

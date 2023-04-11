@@ -35,7 +35,7 @@ public partial class SerachSongsDataItem :MonoBehaviour
             {
                 return;
             }
-            Debug.Log( "添加到播放列表" );
+            CloundMusicInterface.Instance.MusicPlayList.AddToPlayList( m_SongsData );
         } );
     }
 

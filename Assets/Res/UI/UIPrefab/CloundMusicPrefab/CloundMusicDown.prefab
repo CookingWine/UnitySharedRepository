@@ -1066,7 +1066,7 @@ MonoBehaviour:
     BindComponent: {fileID: 611625672133634559}
   m_ClassName: CloundMusicDown
   m_Namespace: 
-  m_CodePath: F:/Project/UnityProject/UnitySharedRepository/Assets/Code/UI/UIBindingComponentBase
+  m_CodePath: D:/UnityProject/UnitySharedRepository/Assets/Code/UI/UIBindingComponentBase
   m_MainCodePath: D:/UnityProject/UnitySharedRepository/Assets/Code/UI/UIInterface
   m_BindComponent:
   - {fileID: 3899785093242926796}

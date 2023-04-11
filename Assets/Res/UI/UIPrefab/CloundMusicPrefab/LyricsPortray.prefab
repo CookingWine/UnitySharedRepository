@@ -292,8 +292,8 @@ MonoBehaviour:
     BindComponent: {fileID: 969229065518962675}
   m_ClassName: LyricsPortray
   m_Namespace: 
-  m_CodePath: F:/Project/UnityProject/UnitySharedRepository/Assets/Code/UI/UIBindingComponentBase
-  m_MainCodePath: F:/Project/UnityProject/UnitySharedRepository/Assets/Code/UI/UIInterface
+  m_CodePath: D:/UnityProject/UnitySharedRepository/Assets/Code/UI/UIBindingComponentBase
+  m_MainCodePath: D:/UnityProject/UnitySharedRepository/Assets/Code/UI/UIInterface
   m_BindComponent:
   - {fileID: 969229066247243228}
   - {fileID: 969229065518962675}

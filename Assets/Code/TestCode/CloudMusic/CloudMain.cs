@@ -14,11 +14,6 @@ public class CloudMain :MonoBehaviour
     private int m_GameFrameRate = 60;
 
     /// <summary>
-    /// 数据
-    /// </summary>
-    private const string UserConfigJsonData = @"C:\Users\Admin\.CloudMusic\UserData\user.json";
-
-    /// <summary>
     /// 是否可以自动登录
     /// </summary>
     private bool m_IsAutonLogin;
@@ -32,24 +27,6 @@ public class CloudMain :MonoBehaviour
         LoadAsset = new GameLoadAsset( );
         Application.targetFrameRate = m_GameFrameRate;
         LoadAsset.EditorEnableBunle( m_EnableEidtorBundleModel );
-        //if( UserConfigJsonData.FileExists( out string data ) )
-        //{
-        //    if( !data.IsNullOrEmpty( ) )
-        //    {
-        //        Debug.Log( "判断是否符合自动登录" );
-        //        m_IsAutonLogin = true;
-
-        //    }
-        //    else
-        //    {
-        //        m_IsAutonLogin = false;
-        //    }
-        //}
-        //else
-        //{
-        //    FileExtend.CreationFile( UserConfigJsonData );
-        //    m_IsAutonLogin = false;
-        //}
     }
     private void Start( )
     {
