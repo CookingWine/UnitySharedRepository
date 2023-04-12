@@ -48,12 +48,13 @@ public partial class CloundMusicDown :MonoBehaviour
             if( totalTime == m_TotalMusicTimer )
             {
                 IsPlay = false;
-                m_TotalMusicTimer = "00:00";
                 if( CloundMusicInterface.Instance.LyricsPortrayData != null )
                 {
                     CloundMusicInterface.Instance.LyricsPortrayData.UpdateLyricsInfo( null );
                 }
                 PlayOverCompelent( );
+                totalTime = string.Empty;
+                return;
             }
         }
     }

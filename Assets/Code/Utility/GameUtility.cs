@@ -1342,6 +1342,20 @@ public static class TextureExtend
     }
 }
 
+public class TimerExtend
+{
+    public static long GetTimeStamp( bool bflag = false )
+    {
+        TimeSpan ts = DateTime.UtcNow - new DateTime( 1970 , 1 , 1 , 0 , 0 , 0 , 0 );
+        long ret;
+        if( bflag )
+            ret = Convert.ToInt64( ts.TotalSeconds );
+        else
+            ret = Convert.ToInt64( ts.TotalMilliseconds );
+        return ret;
+    }
+}
+
 /// <summary>
 ///  扩展
 /// </summary>

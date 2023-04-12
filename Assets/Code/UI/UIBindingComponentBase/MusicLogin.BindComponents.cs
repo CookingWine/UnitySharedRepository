@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-//自动生成于：2023/3/29 18:28:32
+//自动生成于：2023/4/12 13:43:14
 public partial class MusicLogin
 {
 
@@ -13,7 +13,7 @@ public partial class MusicLogin
 	private Button m_Btn_Login;
 	private TextMeshProUGUI m_TTxt_LoginBtnTxt;
 	private RectTransform m_Trans_QRCodeLogin;
-	private Image m_Img_QRCode;
+	private RawImage m_RImg_QRCode;
 	private Button m_Btn_SwitchoverLogin;
 
 	private void InitBindComponent(GameObject go)
@@ -26,7 +26,7 @@ public partial class MusicLogin
 		m_Btn_Login = autoBindTool.GetBindComponent<Button>(4);
 		m_TTxt_LoginBtnTxt = autoBindTool.GetBindComponent<TextMeshProUGUI>(5);
 		m_Trans_QRCodeLogin = autoBindTool.GetBindComponent<RectTransform>(6);
-		m_Img_QRCode = autoBindTool.GetBindComponent<Image>(7);
+		m_RImg_QRCode = autoBindTool.GetBindComponent<RawImage>(7);
 		m_Btn_SwitchoverLogin = autoBindTool.GetBindComponent<Button>(8);
 	}
 }
