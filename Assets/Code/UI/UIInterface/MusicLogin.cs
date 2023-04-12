@@ -34,11 +34,6 @@ public partial class MusicLogin :MonoBehaviour
             Debug.Log( "登录" );
             StartCoroutine( DDDD( ) );
         }
-        if( Input.GetKeyUp( KeyCode.A ) )
-        {
-            CloudMusic.API.CloudMusicAPI.CloudSerachSongsRequest data = new CloudMusic.API.CloudMusicAPI.CloudSerachSongsRequest( ) { SongsName = "苏打" };
-            HttpRequest.Instance.CreateCloudRequet( data , 10 , SuccessCompelet , FailedCompelet );
-        }
     }
 
 

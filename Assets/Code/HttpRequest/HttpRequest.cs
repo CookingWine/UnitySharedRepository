@@ -25,7 +25,7 @@ public class HttpRequest :MonoBehaviour
     }
 
 
-    public void CreateCloudRequet( HttpRequestProvider data , int awaitTime = 10 , Action<DownloadHandler> successCallback = null , Action<string> failedCallback = null )
+    public void CreateCloudLoginRequet( HttpRequestProvider data , int awaitTime = 10 , Action<DownloadHandler> successCallback = null , Action<string> failedCallback = null )
     {
         string body = HttpRequestBody.TGetBodyName( data );
         string url = CloudMusic.API.CloudMusicAPI.RequestUrl + "/" + body;
@@ -33,7 +33,6 @@ public class HttpRequest :MonoBehaviour
         {
             url += $"{data.GetUrl( )}";
         }
-        Debug.Log( "开始请求,完整url为->" + url );
         StartCoroutine( HttpRequetData( url , awaitTime , successCallback , failedCallback ) );
     }
 
