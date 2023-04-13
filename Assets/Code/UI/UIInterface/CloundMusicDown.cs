@@ -125,7 +125,7 @@ public partial class CloundMusicDown :MonoBehaviour
             PlaySongsInfo.SongsData data = CloudMusicAnalysin.AnalysinPlaySongData( request.downloadHandler.text );
             StartCoroutine( DownloadImage( data.album.blurPicUrl ) );
 
-            StartCoroutine( DownloadMusic( CloudMusicAPI.GetRequestMP3URL( data ) ) );
+            StartCoroutine( DownloadMusic( CloudMusicRequestUrl.GetRequestMP3URL( data ) ) );
         }
         else
         {

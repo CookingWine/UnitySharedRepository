@@ -41,7 +41,7 @@ public partial class CloundMusicTop :MonoBehaviour
 
     private IEnumerator RequestMusicCount( string key )
     {
-        string url = CloudMusicAPI.GetSongsInfo( key , 10 );
+        string url = CloudMusicRequestUrl.GetSongsInfo( key , 10 );
         using UnityWebRequest request = new UnityWebRequest( url );
         request.timeout = 5;
         DownloadHandlerBuffer data = new DownloadHandlerBuffer( );

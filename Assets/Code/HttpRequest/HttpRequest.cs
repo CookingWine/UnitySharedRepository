@@ -19,6 +19,12 @@ public class HttpRequest :MonoBehaviour
             return m_Instance;
         }
     }
+
+    public string RequestUrl
+    {
+        get { return CloudMusic.API.CloudMusicAPI.RequestUrl; }
+    }
+
     private void Awake( )
     {
         m_Instance = this;
@@ -33,6 +39,29 @@ public class HttpRequest :MonoBehaviour
         {
             url += $"{data.GetUrl( )}";
         }
+        StartCoroutine( HttpRequetData( url , awaitTime , successCallback , failedCallback ) );
+    }
+
+    public string GetBodyName( HttpRequestProvider data , out string getUrl )
+    {
+        string body = HttpRequestBody.TGetBodyName( data );
+        getUrl = string.Empty;
+        if( !data.GetUrl( ).IsNullOrEmpty( ) )
+        {
+            getUrl = data.GetUrl( );
+        }
+        return body;
+    }
+
+    /// <summary>
+    /// 创建一个请求
+    /// </summary>
+    /// <param name="url">url</param>
+    /// <param name="awaitTime">等待时间</param>
+    /// <param name="successCallback">请求成功事件</param>
+    /// <param name="failedCallback">请求失败事件</param>
+    public void CreateCloudRequet( string url , int awaitTime = 10 , Action<DownloadHandler> successCallback = null , Action<string> failedCallback = null )
+    {
         StartCoroutine( HttpRequetData( url , awaitTime , successCallback , failedCallback ) );
     }
 

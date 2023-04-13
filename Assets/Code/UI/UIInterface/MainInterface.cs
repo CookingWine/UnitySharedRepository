@@ -164,7 +164,7 @@ public partial class MainInterface :MonoBehaviour
     /// <returns></returns>
     private IEnumerator RequestMusicInfo( string key )
     {
-        string url = CloudMusicAPI.GetSongsInfo( key , 100 );
+        string url = CloudMusicRequestUrl.GetSongsInfo( key , 100 );
         using UnityWebRequest request = new UnityWebRequest( url );
         //十秒的等待
         request.timeout = 10;
@@ -203,7 +203,7 @@ public partial class MainInterface :MonoBehaviour
             PlaySongsInfo.SongsData temp = CloudMusicAnalysin.AnalysinPlaySongData( request.downloadHandler.text );
             StartCoroutine( SearchLyric( id ) );
             StartCoroutine( DownloadImage( temp.album ) );
-            StartCoroutine( DownloadMusic( CloudMusicAPI.GetRequestMP3URL( temp ) , audio , temp ) );
+            StartCoroutine( DownloadMusic( CloudMusicRequestUrl.GetRequestMP3URL( temp ) , audio , temp ) );
         }
     }
     private string m_TotalTime;

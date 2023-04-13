@@ -9,51 +9,36 @@ namespace CloudMusic.API
 
 
         /// <summary>
-        /// 二维码key生成
-        /// <para>调用此接口可生成一个 key</para>
-        /// </summary>
-        [HttpRequestBody( "login/qr/key/" )]
-        public class CloudLoginQrKeyRequest :HttpRequestProvider
-        {
-            public override string GetUrl( )
-            {
-                return $"timestamp={TimerExtend.GetTimeStamp( )}";
-            }
-        }
-
-        /// <summary>
-        /// 二维码生成接口
-        /// <para>调用此接口传入上一个接口生成的 key 可生成二维码图片的 base64 和二维码信息,可使用 base64 展示图片,或者使用二维码信息内容自行使用第三方二维码生成库渲染二维码</para>
-        /// </summary>
-        [HttpRequestBody( "login/qr/create/" )]
-        public class CloudLoginQrCreateRequest :HttpRequestProvider
-        {
-            public string Key { get; set; } = string.Empty;
-            public override string GetUrl( )
-            {
-                return $"key={Key}&qrimg=true&timestamp={TimerExtend.GetTimeStamp( )}";
-            }
-        }
-
-        /// <summary>
-        /// 二维码检查接口
-        /// <para>轮询此接口可获取二维码扫码状态,800 为二维码过期,801 为等待扫码,802 为待确认,803 为授权登录成功(803 状态码下会返回 cookies)</para>
-        /// </summary>
-        [HttpRequestBody( "login/qr/check/" )]
-        public class CloudLoginQrCheckRequest :HttpRequestProvider
-        {
-            public string Key { get; set; } = string.Empty;
-            public override string GetUrl( )
-            {
-                return $"key={Key}&timestamp={TimerExtend.GetTimeStamp( )}";
-            }
-        }
-
-        /// <summary>
         /// 用户请求
         /// </summary>
         public class CloudMusicUserRequest
         {
+            /// <summary>
+            /// 二维码key生成
+            /// <para>调用此接口可生成一个 key</para>
+            /// </summary>
+            public static string LoginQRkeyRequest( )
+            {
+                return $"login/qr/key/timestamp={TimerExtend.GetTimeStamp( )}";
+            }
+
+/// <summary>
+            /// 二维码生成接口
+            /// <para>调用此接口传入上一个接口生成的 key 可生成二维码图片的 base64 和二维码信息,可使用 base64 展示图片,或者使用二维码信息内容自行使用第三方二维码生成库渲染二维码</para>
+            /// </summary>
+            public static string LoginQrCreateRequest( string key )
+            {
+                return $"login/qr/create?key={key}&qrimg=true&timestamp={TimerExtend.GetTimeStamp( )}";
+            }
+            /// <summary>
+            /// 二维码检查接口
+            /// <para>轮询此接口可获取二维码扫码状态,800 为二维码过期,801 为等待扫码,802 为待确认,803 为授权登录成功(803 状态码下会返回 cookies)</para>
+            /// </summary>
+            public static string LoginQrCheckRequest( string key )
+            {
+                return $"login/qr/check?key={key}&timestamp={TimerExtend.GetTimeStamp( )}";
+            }
+
             /// <summary>
             /// 退出登录
             /// <para>调用此接口,可退出登录</para>

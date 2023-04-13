@@ -32,7 +32,7 @@ public class CloudMain :MonoBehaviour
     {
         if( !m_IsAutonLogin )
         {
-            LoadAsset.LoadPrefabAsset( "MusicLogin" , MainCanvas );
+            LoadAsset.LoadPrefabAsset( ExcelConfigData.CloudMusicLogin, MainCanvas );
         }
     }
 }

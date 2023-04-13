@@ -643,7 +643,6 @@ public class CloudMusicAnalysin
         return songs;
     }
 
-
     /// <summary>
     /// 解析歌词
     /// </summary>
@@ -821,7 +820,7 @@ public class CloudMusicAnalysin
 /// <summary>
 /// 网易云音乐api
 /// </summary>
-public class CloudMusicAPI
+public class CloudMusicRequestUrl
 {
     private const string URL = "http://music.163.com/api/";
 
@@ -909,4 +908,195 @@ public class LyricData
 public class SongsCommentData
 {
 
+}
+
+/// <summary>
+/// 登录后用户信息
+/// </summary>
+public class CloudMusicUserInfo
+{
+    public AccountData account;
+
+    public ProfileData profile;
+
+    public class AccountData
+    {
+        public int id;
+
+        public string userName;
+
+        public string type;
+
+        public int status;
+
+        public int whitelistAuthority;
+
+        public long createTime;
+
+        public int tokenVersion;
+
+        public int ban;
+
+        public int baoyueVersion;
+
+        public int donateVersion;
+
+        public int vipType;
+
+        public bool anonimousUser;
+
+        public bool paidFee;
+    }
+
+    public class ProfileData
+    {
+        /// <summary>
+        /// 用户ID
+        /// </summary>
+        public int userId;
+        /// <summary>
+        /// 
+        /// </summary>
+        public int userType;
+        /// <summary>
+        /// 用户名
+        /// </summary>
+        public string nickname;
+        /// <summary>
+        /// 
+        /// </summary>
+        public int avatarImgId;
+        /// <summary>
+        /// 头像url
+        /// </summary>
+        public string avatarUrl;
+        /// <summary>
+        /// 
+        /// </summary>
+        public int backgroundImgId;
+        /// <summary>
+        /// 背景url
+        /// </summary>
+        public string backgroundUrl;
+        /// <summary>
+        /// 
+        /// </summary>
+        public string signature;
+        /// <summary>
+        /// 创建时间
+        /// </summary>
+        public int createTime;
+        /// <summary>
+        /// 
+        /// </summary>
+        public string userName;
+        /// <summary>
+        /// 
+        /// </summary>
+        public int accountType;
+        /// <summary>
+        /// 
+        /// </summary>
+        public string shortUserName;
+        /// <summary>
+        /// 
+        /// </summary>
+        public int birthday;
+        /// <summary>
+        /// 
+        /// </summary>
+        public int authority;
+        /// <summary>
+        /// 
+        /// </summary>
+        public int gender;
+        /// <summary>
+        /// 
+        /// </summary>
+        public int accountStatus;
+        /// <summary>
+        /// 
+        /// </summary>
+        public int province;
+        /// <summary>
+        /// 
+        /// </summary>
+        public int city;
+        /// <summary>
+        /// 
+        /// </summary>
+        public int authStatus;
+        /// <summary>
+        /// 
+        /// </summary>
+        public string description;
+        /// <summary>
+        /// 
+        /// </summary>
+        public string detailDescription;
+        /// <summary>
+        /// 
+        /// </summary>
+        public string defaultAvatar;
+        /// <summary>
+        /// 
+        /// </summary>
+        public string expertTags;
+        /// <summary>
+        /// 
+        /// </summary>
+        public string experts;
+        /// <summary>
+        /// 
+        /// </summary>
+        public int djStatus;
+        /// <summary>
+        /// 
+        /// </summary>
+        public int locationStatus;
+        /// <summary>
+        /// 
+        /// </summary>
+        public int vipType;
+        /// <summary>
+        /// 
+        /// </summary>
+        public string followed;
+        /// <summary>
+        /// 
+        /// </summary>
+        public string mutual;
+        /// <summary>
+        /// 
+        /// </summary>
+        public string authenticated;
+        /// <summary>
+        /// 
+        /// </summary>
+        public int lastLoginTime;
+        /// <summary>
+        /// 
+        /// </summary>
+        public string lastLoginIP;
+        /// <summary>
+        /// 
+        /// </summary>
+        public string remarkName;
+        /// <summary>
+        /// 
+        /// </summary>
+        public int viptypeVersion;
+        /// <summary>
+        /// 
+        /// </summary>
+        public int authenticationTypes;
+        /// <summary>
+        /// 
+        /// </summary>
+        public string avatarDetail;
+        /// <summary>
+        /// 
+        /// </summary>
+        public string anchor;
+    }
 }

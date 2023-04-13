@@ -19,7 +19,7 @@ public partial class LyricsInterface :MonoBehaviour
         m_Btn_Switch.onClick.AddListener( ( ) =>
         {
             Debug.Log( "请求歌曲评论" );
-            string url = CloudMusicAPI.GetRequestSongsCommentData( MainInterface.Instance.SongsID );
+            string url = CloudMusicRequestUrl.GetRequestSongsCommentData( MainInterface.Instance.SongsID );
             Debug.Log( url );
             StartCoroutine( RequestComment( url) );
         } );
