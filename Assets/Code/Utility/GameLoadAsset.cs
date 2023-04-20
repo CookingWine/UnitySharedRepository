@@ -62,7 +62,6 @@ public class GameLoadAsset
 
     public GameObject LoadPrefabAsset( string objtName , Transform parent )
     {
-        Debug.Log( $"开始加载资源{objtName}" );
         GameObject temp = null;
 #if UNITY_EDITOR
         if( EnableBundle )

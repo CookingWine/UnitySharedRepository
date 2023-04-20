@@ -1,1 +1,49 @@
-{"UIPrefabDatas":[{"Key":"CloundMusicDown","UIPrefabPath":"Assets/Res/UI/UIPrefab/CloundMusicPrefab/CloundMusicDown.prefab","PrefabResPath":""},{"Key":"CloundMusicInterface","UIPrefabPath":"Assets/Res/UI/UIPrefab/CloundMusicPrefab/CloundMusicInterface.prefab","PrefabResPath":""},{"Key":"CloundMusicTop","UIPrefabPath":"Assets/Res/UI/UIPrefab/CloundMusicPrefab/CloundMusicTop.prefab","PrefabResPath":""},{"Key":"SerachSongsDataItemData","UIPrefabPath":"Assets/Res/UI/UIPrefab/CloundMusicPrefab/SerachSongsDataItem.prefab","PrefabResPath":""},{"Key":"SerachSongsInfo","UIPrefabPath":"Assets/Res/UI/UIPrefab/CloundMusicPrefab/SerachSongsInfo.prefab","PrefabResPath":""},{"Key":"LyricsPortray","UIPrefabPath":"Assets/Res/UI/UIPrefab/CloundMusicPrefab/LyricsPortray.prefab","PrefabResPath":""},{"Key":"CloundMusicPlayList","UIPrefabPath":"Assets/Res/UI/UIPrefab/CloundMusicPrefab/CloundMusicPlayList.prefab","PrefabResPath":""},{"Key":"PlayListItem","UIPrefabPath":"Assets/Res/UI/UIPrefab/CloundMusicPrefab/PlayListItem.prefab","PrefabResPath":""},{"Key":"CloudMusicLogin","UIPrefabPath":"Assets/Res/UI/UIPrefab/CloundMusicPrefab/CloudMusicLogin.prefab","PrefabResPath":""}]}
+{
+    "UIPrefabDatas": [
+        {
+            "Key": "CloundMusicDown",
+            "UIPrefabPath": "Assets/Res/UI/UIPrefab/CloundMusicPrefab/CloundMusicDown.prefab",
+            "PrefabResPath": ""
+        },
+        {
+            "Key": "CloundMusicInterface",
+            "UIPrefabPath": "Assets/Res/UI/UIPrefab/CloundMusicPrefab/CloundMusicInterface.prefab",
+            "PrefabResPath": ""
+        },
+        {
+            "Key": "CloundMusicTop",
+            "UIPrefabPath": "Assets/Res/UI/UIPrefab/CloundMusicPrefab/CloundMusicTop.prefab",
+            "PrefabResPath": ""
+        },
+        {
+            "Key": "SerachSongsDataItemData",
+            "UIPrefabPath": "Assets/Res/UI/UIPrefab/CloundMusicPrefab/SerachSongsDataItem.prefab",
+            "PrefabResPath": ""
+        },
+        {
+            "Key": "SerachSongsInfo",
+            "UIPrefabPath": "Assets/Res/UI/UIPrefab/CloundMusicPrefab/SerachSongsInfo.prefab",
+            "PrefabResPath": ""
+        },
+        {
+            "Key": "LyricsPortray",
+            "UIPrefabPath": "Assets/Res/UI/UIPrefab/CloundMusicPrefab/LyricsPortray.prefab",
+            "PrefabResPath": ""
+        },
+        {
+            "Key": "CloundMusicPlayList",
+            "UIPrefabPath": "Assets/Res/UI/UIPrefab/CloundMusicPrefab/CloundMusicPlayList.prefab",
+            "PrefabResPath": ""
+        },
+        {
+            "Key": "PlayListItem",
+            "UIPrefabPath": "Assets/Res/UI/UIPrefab/CloundMusicPrefab/PlayListItem.prefab",
+            "PrefabResPath": ""
+        },
+        {
+            "Key": "CloudMusicLogin",
+            "UIPrefabPath": "Assets/Res/UI/UIPrefab/CloundMusicPrefab/CloudMusicLogin.prefab",
+            "PrefabResPath": ""
+        }
+    ]
+}

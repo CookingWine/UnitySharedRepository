@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-//自动生成于：2023/4/7 15:19:59
+//自动生成于：2023/4/20 14:56:14
 public partial class CloundMusicTop
 {
 
@@ -10,6 +10,7 @@ public partial class CloundMusicTop
 	private InputField m_Input_SearchSongs;
 	private Button m_Btn_SearchSongs;
 	private Image m_Img_UserIcon;
+	private Text m_Txt_UserName;
 
 	private void InitBindComponent(GameObject go)
 	{
@@ -18,5 +19,6 @@ public partial class CloundMusicTop
 		m_Input_SearchSongs = autoBindTool.GetBindComponent<InputField>(1);
 		m_Btn_SearchSongs = autoBindTool.GetBindComponent<Button>(2);
 		m_Img_UserIcon = autoBindTool.GetBindComponent<Image>(3);
+		m_Txt_UserName = autoBindTool.GetBindComponent<Text>(4);
 	}
 }

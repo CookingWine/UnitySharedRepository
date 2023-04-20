@@ -7,21 +7,45 @@ using CloudMusic.API;
 //自动生成于:2023/4/13 10:30:18
 public partial class CloudMusicLogin :MonoBehaviour
 {
+    private readonly string m_DefalutPath = "C:\\Users\\Admin\\.UserLonginData.json";
+    private static CloudMusicLogin m_Instance;
+    public static CloudMusicLogin Instance
+    {
+        get
+        {
+            if( m_Instance == null )
+            {
+                Debug.LogError( "登录界面已经被卸载，或者还没有创建" );
+                return null;
+            }
+            return m_Instance;
+        }
+    }
+    private string m_QRCodeKey = string.Empty;
+    public string UserLoginData { get; private set; }
     private void Awake( )
     {
+        m_Instance = this;
         InitBindComponent( gameObject );
     }
 
     private void Start( )
     {
-        string url = HttpRequest.Instance.RequestUrl + "/" + CloudMusicAPI.CloudMusicUserRequest.LoginQRkeyRequest( );
-        HttpRequest.Instance.CreateCloudRequet( url , 5 , GenKeySuccessCompenlet ,
-            ( message ) =>
-            {
-                Debug.LogError( message );
-            } );
+        if( FileExtend.FileExists( m_DefalutPath , out string data ) )
+        {
+            UserLoginData = data;
+            Invoke( nameof( AutoLogin ) , 2.0f );
+        }
+        else
+        {
+            string url = HttpRequest.Instance.RequestUrl + "/" + CloudMusicAPI.CloudMusicUserRequest.LoginQRkeyRequest( );
+            HttpRequest.Instance.CreateCloudRequet( url , 5 , GenKeySuccessCompenlet ,
+                ( message ) =>
+                {
+                    Debug.LogError( message );
+                } );
+        }
     }
-    private string m_QRCodeKey = string.Empty;
 
     private void GenKeySuccessCompenlet( DownloadHandler data )
     {
@@ -68,13 +92,14 @@ public partial class CloudMusicLogin :MonoBehaviour
                     Debug.LogWarning( message );
                     break;
                 case 803:
-                    Debug.Log( message + "\r开始获取用户信息" );
                     string cookies = json["cookie"];
-                    CloudMusic.API.CloudMusicAPI.Cookie = cookies;
+                    CloudMusicAPI.Cookie = cookies;
                     string requet = HttpRequest.Instance.RequestUrl + "/" + CloudMusicAPI.CloudMusicUserRequest.LoginStatus( );
                     HttpRequest.Instance.CreateCloudRequet( requet , 5 , ( data ) =>
                     {
-                        Debug.Log( $"获取的用户信息为{data.text}" );
+                        UserLoginData = data.text;
+                        FileExtend.CreationFileWirteData( m_DefalutPath , UserLoginData );
+                        CloudMain.Instance.LoadAsset.LoadPrefabAsset( ExcelConfigData.CloundMusicInterface , CloudMain.Instance.MainCanvas );
                     } ,
                     ( message ) =>
                     {
@@ -105,6 +130,17 @@ public partial class CloudMusicLogin :MonoBehaviour
                 Debug.LogError( "退出失败" + message );
             } );
         }
+    }
 
+    private void AutoLogin( )
+    {
+        CloudMain.Instance.LoadAsset.LoadPrefabAsset( ExcelConfigData.CloundMusicInterface , CloudMain.Instance.MainCanvas );
+    }
+    public void Unload( )
+    {
+        m_Instance = null;
+        UserLoginData = string.Empty;
+        m_QRCodeKey = string.Empty;
+        GameObject.Destroy( transform.gameObject );
     }
 }

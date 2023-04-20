@@ -36,7 +36,7 @@ public partial class CloundMusicInterface :MonoBehaviour
         InitBindComponent( gameObject );
         InitializationLoadData( );
     }
-
+    ///<summary>加载界面数据</summary>
     private void InitializationLoadData( )
     {
         //加载顶部的UI
@@ -54,5 +54,7 @@ public partial class CloundMusicInterface :MonoBehaviour
 
         MusicPlayList = CloudMain.Instance.LoadAsset.LoadPrefabAsset( ExcelConfigData.CloundMusicPlayList , m_Trans_PoPInterface ).GetComponent<CloundMusicPlayList>( );
         MusicPlayList.SetActive( false );
+        CloundMusicTopData.UpdateUserInfo( CloudMusicLogin.Instance.UserLoginData );
+        CloudMusicLogin.Instance.Unload( );
     }
 }

@@ -22,7 +22,7 @@ namespace CloudMusic.API
                 return $"login/qr/key/timestamp={TimerExtend.GetTimeStamp( )}";
             }
 
-/// <summary>
+            /// <summary>
             /// 二维码生成接口
             /// <para>调用此接口传入上一个接口生成的 key 可生成二维码图片的 base64 和二维码信息,可使用 base64 展示图片,或者使用二维码信息内容自行使用第三方二维码生成库渲染二维码</para>
             /// </summary>

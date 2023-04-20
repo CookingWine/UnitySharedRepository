@@ -65,6 +65,11 @@ public class HttpRequest :MonoBehaviour
         StartCoroutine( HttpRequetData( url , awaitTime , successCallback , failedCallback ) );
     }
 
+    public void CreateTextureRequet( string url , Action<Texture2D> successCallback = null , Action<string> failedCallback = null )
+    {
+        StartCoroutine( HttpRequetTexture( url , successCallback , failedCallback ) );
+    }
+
     [System.Diagnostics.CodeAnalysis.SuppressMessage( "Style" , "IDE0090:使用 \"new(...)\"" , Justification = "<挂起>" )]
     private IEnumerator HttpRequetData( string url , int awaitTime , Action<DownloadHandler> successCallback , Action<string> failedCallback )
     {
@@ -80,6 +85,20 @@ public class HttpRequest :MonoBehaviour
         else
         {
             failedCallback?.Invoke( request.error );
+        }
+    }
+    private IEnumerator HttpRequetTexture( string url , Action<Texture2D> successCallback , Action<string> failedCallback )
+    {
+        using UnityWebRequest request = UnityWebRequestTexture.GetTexture( url );
+        yield return request.SendWebRequest( );
+        if( request.result == UnityWebRequest.Result.Success )
+        {
+            Texture2D texture = DownloadHandlerTexture.GetContent( request );
+            successCallback?.Invoke( texture );
+        }
+        else
+        {
+            failedCallback.Invoke( request.error );
         }
     }
 }
