@@ -84,6 +84,7 @@ public class HttpRequest :MonoBehaviour
         }
         else
         {
+            Debug.LogError( $"请求得url为->{url}\n异常错误->\n{request.error}" );
             failedCallback?.Invoke( request.error );
         }
     }

@@ -105,6 +105,19 @@ public partial class CloundMusicDown :MonoBehaviour
     public void PlayCloundMusic( SearchSongsDataInfo.SongsInfo data )
     {
         CurrentPlayIndex = CloundMusicInterface.Instance.MusicPlayList.AddToPlayList( data );
+        HttpRequest.Instance.CreateCloudRequet( $"https://api-unm.imsyy.top/match?id={data.ID}&server=qq,pyncmd,kugou" , 10 , ( data ) =>
+        {
+            Debug.Log( data.text );
+            SimpleJSON.JSONNode json = SimpleJSON.JSON.Parse( data.text );
+            string url = json["data"]["url"];
+            Debug.Log( url );
+            StartCoroutine( DownloadMusic( url ) );
+        } ,
+        ( error ) =>
+        {
+
+        } );
+        return;
         StartCoroutine( RequestPlayMusic( data.ID ) );
         m_Txt_SongsName.text = data.SongName;
         m_Txt_ArtistsName.text = data.Artists.Name;

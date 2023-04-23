@@ -316,11 +316,18 @@ public static class FileExtend
         FileStream fileStream = new FileStream( allPath , FileMode.Create );
         fileStream.Close( );
     }
-    public static void CreationFileWirteData( string allPath , string data )
+    public static void CreationFileWirteData( string allPath , string data , bool delete = true )
     {
         if( File.Exists( allPath ) )
         {
-            throw new Exception( "当前路径已经存在" );
+            if( delete )
+            {
+                File.Delete( allPath );
+            }
+            else
+            {
+                throw new Exception( "当前路径已经存在" );
+            }
         }
         FileStream fileStream = new FileStream( allPath , FileMode.Create );
         StreamWriter stream = new StreamWriter( fileStream );

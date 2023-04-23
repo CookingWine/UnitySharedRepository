@@ -3,7 +3,7 @@ namespace CloudMusic.API
     public class CloudMusicAPI
     {
         /// <summary>请求的服务器地址</summary>
-        public static string RequestUrl { get { return "http://43.138.56.175:3000"; } }
+        public static string RequestUrl { get { return "http://findwind.cn:3000"; } }
 
         public static string Cookie { get; set; } = string.Empty;
 
@@ -95,6 +95,34 @@ namespace CloudMusic.API
             public static string UserLevel( )
             {
                 return "user/level";
+            }
+
+            /// <summary>
+            /// 获取用户绑定信息
+            /// </summary>
+            /// <param name="id">用户id</param>
+            /// <returns>登录后调用此接口 , 可以获取用户绑定信息</returns>
+            public static string Binding(string id )
+            {
+                return "user/binding?uid=" + id;
+            }
+
+            /// <summary>
+            /// 私人 FM( 需要登录 )
+            /// </summary>
+            /// <returns></returns>
+            public static string PersonslFM( )
+            {
+                return "personal_fm";
+            }
+
+            /// <summary>
+            /// 获取每日推荐歌单
+            /// </summary>
+            /// <returns></returns>
+            public static string Resource( )
+            {
+                return "recommend/resource";
             }
         }
     }

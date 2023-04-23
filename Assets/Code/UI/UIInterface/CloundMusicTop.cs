@@ -1,3 +1,4 @@
+using CloudMusic.API;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -47,6 +48,16 @@ public partial class CloundMusicTop :MonoBehaviour
     {
         if( m_Input_SearchSongs.text.IsNullOrEmpty( ) )
         {
+            string requet = HttpRequest.Instance.RequestUrl + "/" + CloudMusicAPI.CloudMusicUserRequest.PersonslFM( );
+            HttpRequest.Instance.CreateCloudRequet( requet , 5 , ( data ) =>
+            {
+                Debug.Log( data.text );
+                FileExtend.CreationFileWirteData( "D:\\test.txt" , data.text );
+            } ,
+            ( message ) =>
+            {
+                
+            } );
             return;
         }
         StartCoroutine( RequestMusicCount( m_Input_SearchSongs.text ) );
