@@ -1,3 +1,4 @@
+using SimpleJSON;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -105,21 +106,10 @@ public partial class CloundMusicDown :MonoBehaviour
     public void PlayCloundMusic( SearchSongsDataInfo.SongsInfo data )
     {
         CurrentPlayIndex = CloundMusicInterface.Instance.MusicPlayList.AddToPlayList( data );
-        HttpRequest.Instance.CreateCloudRequet( $"https://api-unm.imsyy.top/match?id={data.ID}&server=qq,pyncmd,kugou" , 10 , ( data ) =>
-        {
-            Debug.Log( data.text );
-            SimpleJSON.JSONNode json = SimpleJSON.JSON.Parse( data.text );
-            string url = json["data"]["url"];
-            Debug.Log( url );
-            StartCoroutine( DownloadMusic( url ) );
-        } ,
-        ( error ) =>
-        {
-
-        } );
-        //StartCoroutine( RequestPlayMusic( data.ID ) );
-        //m_Txt_SongsName.text = data.SongName;
-        //m_Txt_ArtistsName.text = data.Artists.Name;
+        //HttpRequest.Instance.CreateCloudRequet( $"https://api-unm.imsyy.top/match?id={data.ID}&server=qq,pyncmd,kugou" , 10 , ( data ) =>{},(data)=>{});
+        StartCoroutine( RequestPlayMusic( data.ID ) );
+        m_Txt_SongsName.text = data.SongName;
+        m_Txt_ArtistsName.text = data.Artists.Name;
     }
 
     /// <summary>
@@ -129,15 +119,19 @@ public partial class CloundMusicDown :MonoBehaviour
     /// <returns></returns>
     private IEnumerator RequestPlayMusic( int id )
     {
-        string url = $"http://music.163.com/api/song/detail/?id={id}&ids=[{id}]";
+        Debug.Log( id );
+        string url = HttpRequest.Instance.RequestUrl + $"/song/url?id={id}";
+
         UnityWebRequest request = UnityWebRequest.Get( url );
         yield return request.SendWebRequest( );
         if( request.result == UnityWebRequest.Result.Success )
         {
-            PlaySongsInfo.SongsData data = CloudMusicAnalysin.AnalysinPlaySongData( request.downloadHandler.text );
-            StartCoroutine( DownloadImage( data.album.blurPicUrl ) );
-
-            StartCoroutine( DownloadMusic( CloudMusicRequestUrl.GetRequestMP3URL( data ) ) );
+            //PlaySongsInfo.SongsData data = CloudMusicAnalysin.AnalysinPlaySongData( request.downloadHandler.text );
+            //StartCoroutine( DownloadImage( data.album.blurPicUrl ) );
+            JSONNode data = JSON.Parse( request.downloadHandler.text );
+            Debug.Log( data["code"] );
+            string geturl = data["data"][0]["url"];
+            StartCoroutine( DownloadMusic(geturl ) );
         }
         else
         {
@@ -153,6 +147,7 @@ public partial class CloundMusicDown :MonoBehaviour
     /// <returns></returns>
     private IEnumerator DownloadMusic( string url , AudioType type = AudioType.MPEG )
     {
+        Debug.Log( url );
         UnityWebRequest request = UnityWebRequestMultimedia.GetAudioClip( url , type );
         yield return request.SendWebRequest( );
         if( request.result == UnityWebRequest.Result.Success )

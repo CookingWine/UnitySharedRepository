@@ -842,7 +842,17 @@ public class CloudMusicRequestUrl
     /// <returns></returns>
     public static string GetRequestMP3URL( PlaySongsInfo.SongsData data )
     {
-        return $"http://music.163.com/song/media/outer/url?id={data.id}.mp3";
+        return HttpRequest.Instance.RequestUrl+$"/song/url?id={data.id}.mp3";
+    }
+
+    /// <summary>
+    /// 获取播放mp3的url
+    /// </summary>
+    /// <param name="data"></param>
+    /// <returns></returns>
+    public static string GetRequestMP3URL( int id)
+    {
+        return HttpRequest.Instance.RequestUrl + $"/song/url?id={id}.mp3";
     }
 
     /// <summary>

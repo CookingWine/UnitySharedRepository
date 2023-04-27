@@ -18,6 +18,9 @@ public class CloudMain :MonoBehaviour
     /// </summary>
     private bool m_IsAutonLogin;
 
+
+    public bool IsSkipLogin;
+
     public Transform MainCanvas;
 
     public GameLoadAsset LoadAsset { get; private set; }
