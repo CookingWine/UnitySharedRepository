@@ -38,7 +38,7 @@ public partial class CloudMusicLogin :MonoBehaviour
         }
         else
         {
-            string url = HttpRequest.Instance.RequestUrl + "/" + CloudMusicAPI.CloudMusicUserRequest.LoginQRkeyRequest( );
+            string url = HttpRequest.Instance.RequestUrl + "/" + CloudMusicAPI.CloudMusicWebRequest.LoginQRkeyRequest( );
             HttpRequest.Instance.CreateCloudRequet( url , 5 , GenKeySuccessCompenlet ,
                 ( message ) =>
                 {
@@ -52,7 +52,7 @@ public partial class CloudMusicLogin :MonoBehaviour
         JSONNode json = JSON.Parse( data.text );
         string key = json["data"]["unikey"];
         m_QRCodeKey = key;
-        string url = HttpRequest.Instance.RequestUrl + "/" + CloudMusicAPI.CloudMusicUserRequest.LoginQrCreateRequest( key );
+        string url = HttpRequest.Instance.RequestUrl + "/" + CloudMusicAPI.CloudMusicWebRequest.LoginQrCreateRequest( key );
         HttpRequest.Instance.CreateCloudRequet( url , 5 , GenQRCodeSuccess , ( message ) =>
         {
             Debug.LogError( message );
@@ -73,7 +73,7 @@ public partial class CloudMusicLogin :MonoBehaviour
 
     private void CheckQRCode( )
     {
-        string url = HttpRequest.Instance.RequestUrl + "/" + CloudMusicAPI.CloudMusicUserRequest.LoginQrCheckRequest( m_QRCodeKey );
+        string url = HttpRequest.Instance.RequestUrl + "/" + CloudMusicAPI.CloudMusicWebRequest.LoginQrCheckRequest( m_QRCodeKey );
         HttpRequest.Instance.CreateCloudRequet( url , 3 , ( data ) =>
         {
             JSONNode json = JSON.Parse( data.text );
@@ -94,7 +94,7 @@ public partial class CloudMusicLogin :MonoBehaviour
                 case 803:
                     string cookies = json["cookie"];
                     CloudMusicAPI.Cookie = cookies;
-                    string requet = HttpRequest.Instance.RequestUrl + "/" + CloudMusicAPI.CloudMusicUserRequest.LoginStatus( );
+                    string requet = HttpRequest.Instance.RequestUrl + "/" + CloudMusicAPI.CloudMusicWebRequest.LoginStatus( );
                     HttpRequest.Instance.CreateCloudRequet( requet , 5 , ( data ) =>
                     {
                         UserLoginData = data.text;
@@ -120,7 +120,7 @@ public partial class CloudMusicLogin :MonoBehaviour
         if( Input.GetKeyDown( KeyCode.Space ) )
         {
             Debug.Log( "退出登录" );
-            string url = HttpRequest.Instance.RequestUrl + "/" + CloudMusicAPI.CloudMusicUserRequest.LogOut( );
+            string url = HttpRequest.Instance.RequestUrl + "/" + CloudMusicAPI.CloudMusicWebRequest.LogOut( );
 
             HttpRequest.Instance.CreateCloudRequet( url , 5 , ( data ) =>
             {

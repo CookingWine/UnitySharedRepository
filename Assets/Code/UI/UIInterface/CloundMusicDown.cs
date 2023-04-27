@@ -117,10 +117,9 @@ public partial class CloundMusicDown :MonoBehaviour
         {
 
         } );
-        return;
-        StartCoroutine( RequestPlayMusic( data.ID ) );
-        m_Txt_SongsName.text = data.SongName;
-        m_Txt_ArtistsName.text = data.Artists.Name;
+        //StartCoroutine( RequestPlayMusic( data.ID ) );
+        //m_Txt_SongsName.text = data.SongName;
+        //m_Txt_ArtistsName.text = data.Artists.Name;
     }
 
     /// <summary>

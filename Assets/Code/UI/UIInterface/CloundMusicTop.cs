@@ -48,7 +48,7 @@ public partial class CloundMusicTop :MonoBehaviour
     {
         if( m_Input_SearchSongs.text.IsNullOrEmpty( ) )
         {
-            string requet = HttpRequest.Instance.RequestUrl + "/" + CloudMusicAPI.CloudMusicUserRequest.PersonslFM( );
+            string requet = HttpRequest.Instance.RequestUrl + "/" + CloudMusicAPI.CloudMusicWebRequest.PersonslFM( );
             HttpRequest.Instance.CreateCloudRequet( requet , 5 , ( data ) =>
             {
                 Debug.Log( data.text );

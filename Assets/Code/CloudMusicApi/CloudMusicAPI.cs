@@ -9,9 +9,9 @@ namespace CloudMusic.API
 
 
         /// <summary>
-        /// 用户请求
+        /// 请求接口
         /// </summary>
-        public class CloudMusicUserRequest
+        public class CloudMusicWebRequest
         {
             /// <summary>
             /// 二维码key生成
@@ -30,6 +30,7 @@ namespace CloudMusic.API
             {
                 return $"login/qr/create?key={key}&qrimg=true&timestamp={TimerExtend.GetTimeStamp( )}";
             }
+
             /// <summary>
             /// 二维码检查接口
             /// <para>轮询此接口可获取二维码扫码状态,800 为二维码过期,801 为等待扫码,802 为待确认,803 为授权登录成功(803 状态码下会返回 cookies)</para>
@@ -102,9 +103,30 @@ namespace CloudMusic.API
             /// </summary>
             /// <param name="id">用户id</param>
             /// <returns>登录后调用此接口 , 可以获取用户绑定信息</returns>
-            public static string Binding(string id )
+            public static string Binding( string id )
             {
                 return "user/binding?uid=" + id;
+            }
+
+            /// <summary>
+            /// 调用此接口 ,传入手机号码, 可发送验证码
+            /// </summary>
+            /// <param name="phone">手机号码</param>
+            /// <returns></returns>
+            public static string SendVerificationCode( string phone )
+            {
+                return "captcha/sent?phone=" + phone;
+            }
+
+            /// <summary>
+            /// 调用此接口 ,传入手机号码和验证码, 可校验验证码是否正确
+            /// </summary>
+            /// <param name="phone">手机号码</param>
+            /// <param name="code">验证码</param>
+            /// <returns></returns>
+            public static string VerificationVerificationCode( string phone , string code )
+            {
+                return $"/captcha/verify?phone={phone}&captcha={code}";
             }
 
             /// <summary>
@@ -124,6 +146,26 @@ namespace CloudMusic.API
             {
                 return "recommend/resource";
             }
+
+            /// <summary>
+            /// 获取推荐MV
+            /// </summary>
+            /// <returns>调用此接口 , 可获取推荐 mv</returns>
+            public static string PersonalizedMV( )
+            {
+                return "personalized/mv";
+            }
+            /// <summary>
+            /// mv 地址
+            /// </summary>
+            /// <param name="id">mv id</param>
+            /// <returns>调用此接口 , 传入 mv id,可获取 mv 播放地址</returns>
+            public static string DetailMVData( string id )
+            {
+                return $"mv/url?id={id}&r=1920";
+            }
+
+
         }
     }
 }
