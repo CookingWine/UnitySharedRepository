@@ -335,6 +335,25 @@ public static class FileExtend
         stream.Close( );
         fileStream.Close( );
     }
+    public static void CreationFileWirteData( string allPath , byte[] data , bool delete = true )
+    {
+        if( File.Exists( allPath ) )
+        {
+            if( delete )
+            {
+                File.Delete( allPath );
+            }
+            else
+            {
+                throw new Exception( "当前路径已经存在" );
+            }
+        }
+        FileStream fileStream = new FileStream( allPath , FileMode.Create );
+        StreamWriter stream = new StreamWriter( fileStream );
+        stream.Write( data );
+        stream.Close( );
+        fileStream.Close( );
+    }
     public static string GetFileInfo( string path )
     {
         if( File.Exists( path ) )
@@ -1576,6 +1595,16 @@ public static class ValueExtend
     public static bool ContainCinese( this string str )
     {
         return Regex.IsMatch( str , @"[\u4e00-\u9fa5]" );
+    }
+
+    /// <summary>
+    /// 字符串内是否包含字母
+    /// </summary>
+    /// <param name="str"></param>
+    /// <returns></returns>
+    public static bool ContainLetter(this string str )
+    {
+        return Regex.Matches( str , "[a-zA-Z]" ).Count > 0;
     }
 
     /// <summary>

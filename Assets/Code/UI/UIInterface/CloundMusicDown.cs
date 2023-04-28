@@ -24,7 +24,12 @@ public partial class CloundMusicDown :MonoBehaviour
         InitBindComponent( gameObject );
         InitializationData( );
     }
-
+    /*
+     * 半岛铁盒
+     * https://dl.stream.qqmusic.qq.com/C4000019GXTz1OM6Wu.m4a?guid=2691270072&vkey=5C53A7C950DD9F65CDF3B374CA3550A287813B028892EE797560330A6109CF0A6DF8275F1A39037230A6B66D614EEF76AA2E06389D5B9927&uin=3181983989&fromtag=120032
+     * 晴天
+     * https://dl.stream.qqmusic.qq.com/C400002202B43Cq4V4.m4a?guid=2691270072&vkey=48D5B8E8BD4112C970919B0740B53C5F34E929829224DD845FCC1428DDA4D49AEF14442F244CB6F415710C3539776C990B1211B774E04F94&uin=3181983989&fromtag=120032
+     */
     private void Update( )
     {
         if( m_Source_CloundMusic.clip == null )
