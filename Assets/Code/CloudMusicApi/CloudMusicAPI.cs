@@ -58,6 +58,11 @@ namespace CloudMusic.API
                 return "login/status";
             }
 
+            public static string Login( string phone , string password )
+            {
+                return $"login/cellphone?phone={phone}&password={password}";
+            }
+
             /// <summary>
             /// 获取用户详情
             /// <para>登录后调用此接口 , 传入用户 id, 可以获取用户详情</para>
@@ -172,10 +177,31 @@ namespace CloudMusic.API
 
             public static string GetRequestMP3URL( int id )
             {
-                return $"song/url?id={id}.mp3";
+                return $"song/url?id={id}";
             }
 
+            public enum Level
+            {
+                ///<summary>标准</summary>
+                standard,
+                ///<summary>较高</summary>
+                higher,
+                ///<summary>极高</summary>
+                exhigh,
+                ///<summary>无损</summary>
+                lossless,
+                ///<summary>Hi-Res</summary>
+                hires,
+                ///<summary>鲸云臻音</summary>
+                jyeffect,
+                ///<summary>鲸云母带</summary>
+                jymaster
+            }
 
+            public static string GetRequestMP3URL( int id , Level level )
+            {
+                return $"song/url/v1?id={id}&level={level}";
+            }
         }
     }
 }
