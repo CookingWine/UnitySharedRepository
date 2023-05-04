@@ -135,7 +135,7 @@ namespace CloudMusic.API
             /// <returns></returns>
             public static string PersonslFM( )
             {
-                return "personal_fm";
+                return $"personal_fm/timestamp={TimerExtend.GetTimeStamp( )}";
             }
 
             /// <summary>
@@ -163,6 +163,16 @@ namespace CloudMusic.API
             public static string DetailMVData( string id )
             {
                 return $"mv/url?id={id}&r=1920";
+            }
+
+            public static string SearchSong( string key )
+            {
+                return $"search?keywords=={key}";
+            }
+
+            public static string GetRequestMP3URL( int id )
+            {
+                return $"song/url?id={id}.mp3";
             }
 
 
